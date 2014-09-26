@@ -1,0 +1,2 @@
+c:\users\daniel\documents\visual studio 2013\Projects\VSY Server\VSY Server\bin\Debug\VSY Server.exe.config
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\bin\Debug\VSY Server.exe.config
