@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSY Server", "VSY Server\VS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSY Client", "VSY Client\VSY Client.csproj", "{879DA2A7-FC7F-430C-AE00-B287D4BCF945}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkLib", "NetworkLib\NetworkLib.csproj", "{7748FDCA-DFD5-4EBB-AFEB-16C0AE977F5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{879DA2A7-FC7F-430C-AE00-B287D4BCF945}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{879DA2A7-FC7F-430C-AE00-B287D4BCF945}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{879DA2A7-FC7F-430C-AE00-B287D4BCF945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7748FDCA-DFD5-4EBB-AFEB-16C0AE977F5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7748FDCA-DFD5-4EBB-AFEB-16C0AE977F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7748FDCA-DFD5-4EBB-AFEB-16C0AE977F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7748FDCA-DFD5-4EBB-AFEB-16C0AE977F5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
