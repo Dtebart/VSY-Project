@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Button Content="Nachricht senden" HorizontalAlignment="Left" Margin="80,70,0,0" VerticalAlignment="Top" Width="358" RenderTransformOrigin="0.961,-1.509" Height="81" FontSize="20" Click="Button_Click"/>
+
     </Grid>
 </Window>

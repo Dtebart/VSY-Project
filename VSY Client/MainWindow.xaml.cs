@@ -25,7 +25,6 @@ namespace VSY_Client
         public MainWindow()
         {
             InitializeComponent();
-            Connect(System.Environment.MachineName, "Hello World!");
         }
 
         private void Connect(String server, String message)
@@ -78,6 +77,11 @@ namespace VSY_Client
 
             Console.WriteLine("\n Press Enter to continue...");
             Console.Read();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Connect(System.Environment.MachineName, "Hello World!");
         }
     }
 }
