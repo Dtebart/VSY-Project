@@ -1,9 +1,10 @@
 ﻿<Window x:Class="VSY_Client.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525" Closing="Window_Closing">
     <Grid>
         <Button Content="Nachricht senden" HorizontalAlignment="Left" Margin="80,70,0,0" VerticalAlignment="Top" Width="358" RenderTransformOrigin="0.961,-1.509" Height="81" FontSize="20" Click="Button_Click"/>
+        <TextBox x:Name="messageBox" HorizontalAlignment="Left" Height="78" Margin="142,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="229" FontSize="16"/>
 
     </Grid>
 </Window>

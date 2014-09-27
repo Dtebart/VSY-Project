@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
@@ -22,49 +23,31 @@ namespace VSY_Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        private TcpClient client;
+        private NetworkStream messageChannel;
+        private Thread readChannel;
+
         public MainWindow()
         {
             InitializeComponent();
+            Connect(System.Environment.MachineName);
         }
 
-        private void Connect(String server, String message)
+        private void Connect(String server)
         {
             try
             {
-                // Create a TcpClient.
-                // Note, for this client to work you need to have a TcpServer 
-                // connected to the same address as specified by the server, port
-                // combination.
                 Int32 port = 13000;
-                TcpClient client = new TcpClient(server, port);
 
-                // Translate the passed message into ASCII and store it as a Byte array.
-                Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
+                // Initialize connection to dedicated Server
+                client = new TcpClient(server, port);
+                messageChannel = client.GetStream();
 
-                // Get a client stream for reading and writing.
-                //  Stream stream = client.GetStream();
+                // Start thread for reading data
+                ThreadStart readDel = new ThreadStart(ReadChannel);
+                readChannel = new Thread(readDel);
 
-                NetworkStream stream = client.GetStream();
-
-                // Send the message to the connected TcpServer. 
-                stream.Write(data, 0, data.Length);
-
-                // Receive the TcpServer.response.
-
-                // Buffer to store the response bytes.
-                data = new Byte[256];
-
-                // String to store the response ASCII representation.
-                String responseData = String.Empty;
-
-                // Read the first batch of the TcpServer response bytes.
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                MessageBox.Show(responseData);
-
-                // Close everything.
-                stream.Close();
-                client.Close();
+                readChannel.Start();
             }
             catch (ArgumentNullException e)
             {
@@ -81,7 +64,41 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Connect(System.Environment.MachineName, "Hello World!");
+            WriteMessage("Hello World!");
+        }
+
+        private void WriteMessage(String message)
+        {
+            // Translate the passed message into ASCII and store it as a Byte array.
+            Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
+
+            // Send the message to the connected TcpServer. 
+            messageChannel.Write(data, 0, data.Length);
+        }
+
+        private void ReadChannel()
+        {
+            // Buffer to store the response bytes.
+            Byte[] data = new Byte[256];
+
+            // String to store the response ASCII representation.
+            String responseData = String.Empty;
+
+            int i;
+            while (true)
+            {
+                while ((i = messageChannel.Read(data, 0, data.Length)) != 0)
+                {
+                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, i);
+
+                    Dispatcher.BeginInvoke(new Action(() => messageBox.Text = responseData));
+                }
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            readChannel.Abort();
         }
     }
 }
