@@ -1,0 +1,13 @@
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\bin\Debug\VSY Client.exe.config
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\bin\Debug\VSY Client.exe
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\bin\Debug\VSY Client.pdb
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\MainWindow.baml
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\MainWindow.g.cs
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\App.g.cs
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client_MarkupCompile.cache
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.g.resources
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY_Client.Properties.Resources.resources
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.csproj.GenerateResource.Cache
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.exe
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.pdb

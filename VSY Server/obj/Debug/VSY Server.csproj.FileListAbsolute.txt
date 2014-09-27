@@ -1,2 +1,7 @@
 c:\users\daniel\documents\visual studio 2013\Projects\VSY Server\VSY Server\bin\Debug\VSY Server.exe.config
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\bin\Debug\VSY Server.exe.config
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\bin\Debug\VSY Server.exe
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\bin\Debug\VSY Server.pdb
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\obj\Debug\VSY Server.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\obj\Debug\VSY Server.exe
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\obj\Debug\VSY Server.pdb
