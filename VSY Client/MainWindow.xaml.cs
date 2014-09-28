@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using NetworkLib;
+
 namespace VSY_Client
 {
     /// <summary>
@@ -64,16 +66,15 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WriteMessage("Hello World!");
+            WriteMessage("Hello World!", IPAddress.Loopback);
         }
 
-        private void WriteMessage(String message)
+        private void WriteMessage(string message, IPAddress destIp)
         {
-            // Translate the passed message into ASCII and store it as a Byte array.
-            Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
+            Packet packet = new Packet(destIp, message);
 
             // Send the message to the connected TcpServer. 
-            messageChannel.Write(data, 0, data.Length);
+            messageChannel.Write(packet.Bytes, 0, packet.Bytes.Length);
         }
 
         private void ReadChannel()

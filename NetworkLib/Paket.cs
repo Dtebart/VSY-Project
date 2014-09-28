@@ -8,27 +8,35 @@ using System.Threading.Tasks;
 
 namespace NetworkLib
 {
-    public class Paket
+    public class Packet
     {
         private IPAddress _srcIp;
         private IPAddress _destIp;
         private string _content;
 
         // ---------------------- Constructors ----------------------
-        public Paket()
+        public Packet()
         {
             _srcIp = IPAddress.Loopback;
             _destIp = IPAddress.Loopback;
             _content = "Hello World!";
         }
 
-        public Paket(IPAddress srcIp, IPAddress destIp){
+        public Packet(IPAddress srcIp, IPAddress destIp){
             _srcIp = srcIp;
             _destIp = destIp;
             _content = String.Empty;
         }
 
-        public Paket(IPAddress srcIp, IPAddress destIp, string content)
+        public Packet(IPAddress destIp, string content)
+        {
+            _destIp = destIp;
+            _content = content;
+            IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
+            _srcIp = IPAddress.Parse(GetPublicIP());
+        }
+
+        public Packet(IPAddress srcIp, IPAddress destIp, string content)
             : this(srcIp, destIp)
         {
             _content = content;
@@ -50,6 +58,21 @@ namespace NetworkLib
         public Byte[] Bytes
         {
             get { return System.Text.Encoding.ASCII.GetBytes(_content); }
+        }
+
+        // ---------------------- Functions ----------------------
+        private static string GetPublicIP()
+        {
+            string url = "http://checkip.dyndns.org";
+            System.Net.WebRequest req = System.Net.WebRequest.Create(url);
+            System.Net.WebResponse resp = req.GetResponse();
+            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+            string response = sr.ReadToEnd().Trim();
+            string[] a = response.Split(':');
+            string a2 = a[1].Substring(1);
+            string[] a3 = a2.Split('<');
+            string a4 = a3[0];
+            return a4;
         }
     }
 }

@@ -11,3 +11,5 @@ C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\o
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.csproj.GenerateResource.Cache
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.exe
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.pdb
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\bin\Debug\NetworkLib.dll
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\bin\Debug\NetworkLib.pdb

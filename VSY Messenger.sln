@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSY Server", "VSY Server\VSY Server.csproj", "{28F05036-5491-4CF1-B1BE-826DF071EDA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSY Client", "VSY Client\VSY Client.csproj", "{879DA2A7-FC7F-430C-AE00-B287D4BCF945}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7748FDCA-DFD5-4EBB-AFEB-16C0AE977F5B} = {7748FDCA-DFD5-4EBB-AFEB-16C0AE977F5B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkLib", "NetworkLib\NetworkLib.csproj", "{7748FDCA-DFD5-4EBB-AFEB-16C0AE977F5B}"
 EndProject
