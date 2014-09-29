@@ -66,7 +66,8 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WriteMessage("Hello World!", IPAddress.Loopback);
+            WriteMessage(messageBox.Text, IPAddress.Loopback);
+            messageBox.Text = "";
         }
 
         private void WriteMessage(string message, IPAddress destIp)
@@ -92,7 +93,7 @@ namespace VSY_Client
                 {
                     responseData = System.Text.Encoding.ASCII.GetString(data, 0, i);
 
-                    Dispatcher.BeginInvoke(new Action(() => messageBox.Text = responseData));
+                    Dispatcher.BeginInvoke(new Action(() => recievedMessageBox.Text += responseData + "\n"));
                 }
             }
         }
