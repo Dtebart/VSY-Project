@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientLink.cs" />
+    <Compile Include="IClient.cs" />
+    <Compile Include="ILink.cs" />
     <Compile Include="Paket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

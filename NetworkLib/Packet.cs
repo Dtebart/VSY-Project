@@ -10,17 +10,16 @@ namespace NetworkLib
 {
     public class Packet
     {
-        // ---------------------- Properties ----------------------
         private IPAddress _srcIp;
         private IPAddress _destIp;
-        internal string _content;
+        private string _content;
 
         // ---------------------- Constructors ----------------------
         public Packet()
         {
             _srcIp = IPAddress.Loopback;
             _destIp = IPAddress.Loopback;
-            _content = String.Empty;
+            _content = "Hello World!";
         }
 
         public Packet(IPAddress srcIp, IPAddress destIp){

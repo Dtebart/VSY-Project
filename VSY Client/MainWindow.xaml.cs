@@ -23,11 +23,9 @@ namespace VSY_Client
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IClient
     {
-        private TcpClient client;
-        private NetworkStream messageChannel;
-        private Thread readChannel;
+        private ClientLink _link;
 
         public MainWindow()
         {
@@ -39,17 +37,7 @@ namespace VSY_Client
         {
             try
             {
-                Int32 port = 13000;
-
-                // Initialize connection to dedicated Server
-                client = new TcpClient(server, port);
-                messageChannel = client.GetStream();
-
-                // Start thread for reading data
-                ThreadStart readDel = new ThreadStart(ReadChannel);
-                readChannel = new Thread(readDel);
-
-                readChannel.Start();
+                _link = new ClientLink(this);
             }
             catch (ArgumentNullException e)
             {
@@ -59,48 +47,23 @@ namespace VSY_Client
             {
                 Console.WriteLine("SocketException: {0}", e);
             }
-
-            Console.WriteLine("\n Press Enter to continue...");
-            Console.Read();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WriteMessage(messageBox.Text, IPAddress.Loopback);
+            _link.WriteMessage(messageBox.Text, IPAddress.Loopback);
             messageBox.Text = "";
         }
 
-        private void WriteMessage(string message, IPAddress destIp)
+        public void ActionAfterRead(Packet receipt)
         {
-            Packet packet = new Packet(destIp, message);
-
-            // Send the message to the connected TcpServer. 
-            messageChannel.Write(packet.Bytes, 0, packet.Bytes.Length);
-        }
-
-        private void ReadChannel()
-        {
-            // Buffer to store the response bytes.
-            Byte[] data = new Byte[256];
-
-            // String to store the response ASCII representation.
-            String responseData = String.Empty;
-
-            int i;
-            while (true)
-            {
-                while ((i = messageChannel.Read(data, 0, data.Length)) != 0)
-                {
-                    responseData = System.Text.Encoding.ASCII.GetString(data, 0, i);
-
-                    Dispatcher.BeginInvoke(new Action(() => recievedMessageBox.Text += responseData + "\n"));
-                }
-            }
+            Dispatcher.BeginInvoke(new Action(() => receivedMessageBox.Text += receipt.Content + "\n"));
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            readChannel.Abort();
+            _link.Close();
+            _link = null;
         }
     }
 }

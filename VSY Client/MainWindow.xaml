@@ -5,7 +5,7 @@
     <Grid>
         <Button Content="Nachricht senden" HorizontalAlignment="Left" Margin="293,222,0,0"  VerticalAlignment="Top" Width="196" RenderTransformOrigin="0.961,-1.509" Height="78" FontSize="20" Click="Button_Click"/>
         <TextBox x:Name="messageBox" HorizontalAlignment="Left" Height="78" Margin="23,222,0,0" Background="AliceBlue" TextWrapping="Wrap" VerticalAlignment="Top" Width="229" FontSize="16" RenderTransformOrigin="-0.253,0.538"/>
-        <TextBlock x:Name="recievedMessageBox" HorizontalAlignment="Left" Height="184" Background="Beige" Margin="23,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="466" FontSize="16" RenderTransformOrigin="-0.253,0.538"/>
+        <TextBlock x:Name="receivedMessageBox" HorizontalAlignment="Left" Height="184" Background="Beige" Margin="23,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="466" FontSize="16" RenderTransformOrigin="-0.253,0.538"/>
 
     </Grid>
 </Window>
