@@ -3,3 +3,8 @@ C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\NetworkLib\b
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\NetworkLib\obj\Debug\NetworkLib.csprojResolveAssemblyReference.cache
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\NetworkLib\obj\Debug\NetworkLib.dll
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\NetworkLib\obj\Debug\NetworkLib.pdb
+C:\Users\Schmax\DerInstantMessenger\NetworkLib\bin\Debug\NetworkLib.dll
+C:\Users\Schmax\DerInstantMessenger\NetworkLib\bin\Debug\NetworkLib.pdb
+C:\Users\Schmax\DerInstantMessenger\NetworkLib\obj\Debug\NetworkLib.csprojResolveAssemblyReference.cache
+C:\Users\Schmax\DerInstantMessenger\NetworkLib\obj\Debug\NetworkLib.dll
+C:\Users\Schmax\DerInstantMessenger\NetworkLib\obj\Debug\NetworkLib.pdb

@@ -58,6 +58,7 @@ namespace NetworkLib
 
         public void WriteMessage(String message, IPAddress destIp)
         {
+            
             Packet packet = new Packet(IPAddress.Loopback, message);
             _stream.Write(packet.Bytes, 0, packet.Bytes.Length);
             Console.WriteLine("Sent: {0}", message);

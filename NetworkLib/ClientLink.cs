@@ -72,8 +72,11 @@ namespace NetworkLib
 
         public void WriteMessage(String message, IPAddress destIp)
         {
-            Packet packet = new Packet(destIp, message);
+            if (message[message.Length - 1] != '\n')
+                message += '\n';
 
+            Packet packet = new Packet(destIp, message);
+            
             // Send the message to the connected TcpServer. 
             _stream.Write(packet.Bytes, 0, packet.Bytes.Length);
         }
