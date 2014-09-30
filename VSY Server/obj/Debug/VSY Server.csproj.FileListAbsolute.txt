@@ -8,3 +8,5 @@ C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\o
 C:\Users\Schmax\DerInstantMessenger\VSY Server\bin\Debug\VSY Server.exe.config
 C:\Users\Schmax\DerInstantMessenger\VSY Server\obj\Debug\VSY Server.exe
 C:\Users\Schmax\DerInstantMessenger\VSY Server\obj\Debug\VSY Server.pdb
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\bin\Debug\NetworkLib.dll
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\bin\Debug\NetworkLib.pdb

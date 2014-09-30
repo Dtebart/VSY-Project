@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NetworkLib
 {
-    public class ClientLink : ILink
+    public class ClientLink
     {
         // ---------------------- Properties ----------------------
         private int _port;
