@@ -10,53 +10,45 @@ using System.Threading;
 
 namespace VSY_Server
 {
-    class ServeThread
+    public class ServeThread
     {
-        Thread thread;
-        ServerLink serverLink;
-        TcpClient client;
+        Thread _thread;
+        ServerLink _serverLink;
+        TcpClient _client;
 
         public ServeThread(ServerLink link, TcpClient client)
         {
-            serverLink = link;
-            this.client = client;
-            thread = new Thread(this.serve);
+            _serverLink = link;
+            this._client = client;
+            _thread = new Thread(this.Serve);
         }
 
-        public void serve()
+        public void Serve()
         {
-            while (client.Connected)
-            {
-                Packet Complete_message = ReadMessage();
-                HandleMessage(Complete_message);
-            }
+            Packet message = ReadMessage();
+            HandleMessage(message);
         }
 
-        public void start()
+        public void Start()
         {
-            
-            thread.Start();
-           // thread.Join();
-
+            _thread.Start();
         }
 
         private Packet ReadMessage()
         {
-            Packet receipt = serverLink.ReadChannel();
-            string full_message = receipt.Content;
-            while (receipt.Content[receipt.Content.Length - 1] != '\n')
-            {
-                receipt = serverLink.ReadChannel();
-                full_message += receipt.Content;
-            }
-            full_message = full_message.Remove(full_message.Length - 1);
-            Packet full_reciept = new Packet(receipt.SrcIp, receipt.DestIp, full_message);
-            return full_reciept;
+            return _serverLink.ReadChannel();
         }
 
-        private void HandleMessage(Packet reciept)
+        private void HandleMessage(Packet receipt)
         {
-            serverLink.WriteMessage(reciept.Content, IPAddress.Loopback);
+            _serverLink = GetLink(receipt);
+            _serverLink.WriteMessage(receipt.Content, IPAddress.Loopback);
+        }
+
+        private ServerLink GetLink(Packet receipt)
+        {
+            // Test Settings!!
+            return new ServerLink(13000, IPAddress.Loopback);
         }
     }
 }

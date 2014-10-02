@@ -12,6 +12,7 @@ namespace NetworkLib
     {
         // ---------------------- Properties ----------------------
         private TcpListener _serverSocket;
+        private TcpClient _client;
         private int _port;
         private NetworkStream _stream;
 
@@ -30,6 +31,14 @@ namespace NetworkLib
             _serverSocket.Start();
         }
 
+        public ServerLink(int port, IPAddress clientAddress)
+        {
+            _port = port;
+            IPEndPoint clientPoint = new IPEndPoint(clientAddress, _port);
+            _client = new TcpClient(clientPoint);
+            _stream = _client.GetStream();
+        }
+
         // ---------------------- Getter/Setter ----------------------
         public TcpListener Listener
         {
@@ -43,33 +52,37 @@ namespace NetworkLib
             Byte[] dataBuffer = new Byte[256];
             Packet receipt = new Packet();
 
-            while ((i = _stream.Read(dataBuffer, 0, dataBuffer.Length)) != 0)
+            do
             {
+                i = _stream.Read(dataBuffer, 0, dataBuffer.Length);
+
                 // Translate data bytes to a ASCII string.
                 string message = System.Text.Encoding.ASCII.GetString(dataBuffer, 0, i);
                 Console.WriteLine("Received: {0}", message);
 
-                receipt._content = message;
-                return receipt;
-            }
+                receipt._content += message;
+            } while (receipt.Content[receipt.Content.Length - 1] != '\n');
 
+            _stream.Close();
+            _client.Close();
             return receipt;
         }
 
         public void WriteMessage(String message, IPAddress destIp)
         {
-            
             Packet packet = new Packet(IPAddress.Loopback, message);
             _stream.Write(packet.Bytes, 0, packet.Bytes.Length);
             Console.WriteLine("Sent: {0}", message);
+
+            _client.Close();
         }
 
         public TcpClient Listen()
         {
-            TcpClient client = _serverSocket.AcceptTcpClient();
-            _stream = client.GetStream();
+            _client = _serverSocket.AcceptTcpClient();
+            _stream = _client.GetStream();
 
-            return client;
+            return _client;
         }
     }
 }
