@@ -25,8 +25,8 @@ namespace VSY_Client
     /// </summary>
     public partial class MainWindow : Window, IClient
     {
-        private ClientLink _link;
-
+        //private ClientLink _link;
+        NetworkManager abc;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,7 +37,8 @@ namespace VSY_Client
         {
             try
             {
-                _link = new ClientLink(this);
+                abc = new NetworkManager(this);
+                //_link = new ClientLink(this);
             }
             catch (ArgumentNullException e)
             {
@@ -47,11 +48,12 @@ namespace VSY_Client
             {
                 Console.WriteLine("SocketException: {0}", e);
             }
-        }
+        } 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _link.WriteMessage(messageBox.Text, IPAddress.Loopback);
+            //_link.WriteMessage(messageBox.Text, IPAddress.Loopback);
+            abc.SendMessage(messageBox.Text);
             messageBox.Text = "";
         }
 
@@ -62,8 +64,8 @@ namespace VSY_Client
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _link.Close();
-            _link = null;
+            //_link.Close();
+            //_link = null;
         }
     }
 }

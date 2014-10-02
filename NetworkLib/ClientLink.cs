@@ -16,20 +16,19 @@ namespace NetworkLib
         private string _server;
         private Packet _lastPacket;
         private TcpClient _clientSocket;
-        private NetworkStream _stream;
         private IClient _client;
         private Thread _readThread;
+        private NetworkManager _manager;
 
         // ---------------------- Constructors ----------------------
 
         // Server is the same as the client; only for debugging purposes
-        public ClientLink(IClient client)
+        public ClientLink(NetworkManager manager)
         {
             _port = 13000;
             _server = System.Environment.MachineName;
-            _clientSocket = new TcpClient(_server, _port);
-            _client = client;
-            StartReading();
+            
+            _manager = manager;
         }
 
         public ClientLink(IClient client, int port, string server)
@@ -38,13 +37,13 @@ namespace NetworkLib
             _server = server;
             _clientSocket = new TcpClient(_server, _port);
             _client = client;
-            StartReading();
+            
         }
 
         // ---------------------- Functions ----------------------
-        private void StartReading()
+       /* private void StartReading()
         {
-            _stream = _clientSocket.GetStream();
+            
 
             // Start thread for reading data
             ThreadStart readDel = new ThreadStart(ReadChannel);
@@ -55,6 +54,7 @@ namespace NetworkLib
 
         public void ReadChannel()
         {
+            
             // Buffer to store the response bytes.
             Byte[] data = new Byte[256];
 
@@ -68,17 +68,24 @@ namespace NetworkLib
                     _client.ActionAfterRead(_lastPacket);
                 }
             }
-        }
+        }*/
 
         public void WriteMessage(String message, IPAddress destIp)
         {
+            Monitor.Enter(_manager._stream);
+            _clientSocket = new TcpClient(_server, _port);
+            _manager._stream = _clientSocket.GetStream();
+            
             if (message[message.Length - 1] != '\n')
                 message += '\n';
 
             Packet packet = new Packet(destIp, message);
             
             // Send the message to the connected TcpServer. 
-            _stream.Write(packet.Bytes, 0, packet.Bytes.Length);
+            _manager._stream.Write(packet.Bytes, 0, packet.Bytes.Length);
+            _clientSocket.Close();
+            _manager._stream.Close();
+            Monitor.Exit(_manager._stream);
         }
 
         public void Close()

@@ -40,7 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientLink.cs" />
+    <Compile Include="ClientListener.cs" />
     <Compile Include="IClient.cs" />
+    <Compile Include="NetworkManager.cs" />
     <Compile Include="Paket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerLink.cs" />
