@@ -16,8 +16,6 @@ namespace NetworkLib
         private string _server;
         private Packet _lastPacket;
         private TcpClient _clientSocket;
-        private IClient _client;
-        private Thread _readThread;
         private NetworkManager _manager;
 
         // ---------------------- Constructors ----------------------
@@ -31,12 +29,11 @@ namespace NetworkLib
             _manager = manager;
         }
 
-        public ClientLink(IClient client, int port, string server)
+        public ClientLink(int port, string server)
         {
             _port = port;
             _server = server;
             _clientSocket = new TcpClient(_server, _port);
-            _client = client;
             
         }
 
@@ -72,10 +69,10 @@ namespace NetworkLib
 
         public void WriteMessage(String message, IPAddress destIp)
         {
-            Monitor.Enter(_manager._stream);
+            
             _clientSocket = new TcpClient(_server, _port);
             _manager._stream = _clientSocket.GetStream();
-            
+            Monitor.Enter(_manager._stream);
             if (message[message.Length - 1] != '\n')
                 message += '\n';
 
@@ -88,10 +85,5 @@ namespace NetworkLib
             Monitor.Exit(_manager._stream);
         }
 
-        public void Close()
-        {
-            // get rid of read thread
-            _readThread.Abort();
-        }
     }
 }
