@@ -17,19 +17,12 @@ namespace VSY_Server
             
             try
             {
-                
-                ServerLink serverLink = new ServerLink();
+                ServerLink listenLink = new ServerLink();
                 while (true)
                 {
-
-                    
-                    TcpClient client = serverLink.Listen();
-                    ServeThread serveThread = new ServeThread(serverLink, client);
-
-                    //Packet receipt = serverLink.ReadChannel();
-                    //serverLink.WriteMessage(receipt.Content, IPAddress.Loopback);
-                    serveThread.serve();
-               
+                    TcpClient client = listenLink.Listen();
+                    ServeThread serveThread = new ServeThread(listenLink, client);
+                    serveThread.Serve();
                 }
             }
             catch (SocketException e)
