@@ -13,6 +13,7 @@ namespace NetworkLib
         // ---------------------- Properties ----------------------
         private TcpListener _serverSocket;
         private TcpClient _client;
+        private TcpClient _server;
         private int _port;
         private NetworkStream _stream;
 
@@ -83,6 +84,13 @@ namespace NetworkLib
             _stream = _client.GetStream();
 
             return _client;
+        }
+
+        public void ConnectToClient(int port, IPAddress clientAddress)
+        {
+            IPEndPoint clientPoint = new IPEndPoint(clientAddress, port);
+            _server = new TcpClient(clientPoint);
+            _stream = _server.GetStream();
         }
     }
 }

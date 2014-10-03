@@ -26,7 +26,8 @@ namespace VSY_Server
         public void Serve()
         {
             Packet message = ReadMessage();
-            HandleMessage(message);
+            Console.WriteLine("Erhalten: {0}" , message.Content);
+            //HandleMessage(message);
         }
 
         public void Start()
@@ -41,14 +42,8 @@ namespace VSY_Server
 
         private void HandleMessage(Packet receipt)
         {
-            _serverLink = GetLink(receipt);
+            _serverLink.ConnectToClient(13001, IPAddress.Loopback);
             _serverLink.WriteMessage(receipt.Content, IPAddress.Loopback);
-        }
-
-        private ServerLink GetLink(Packet receipt)
-        {
-            // Test Settings!!
-            return new ServerLink(13000, IPAddress.Loopback);
         }
     }
 }
