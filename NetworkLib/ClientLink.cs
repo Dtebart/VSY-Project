@@ -26,9 +26,17 @@ namespace NetworkLib
         public ClientLink(IClient client)
         {
             _port = 13000;
-            _server = System.Environment.MachineName;
-            _clientSocket = new TcpClient(_server, _port);
+            //_server = System.Environment.MachineName;
+            IPAddress _IPserver = IPAddress.Parse("178.201.223.250");
+            IPAddress _IPclient = IPAddress.Parse("192.168.220.104");
+            IPEndPoint _serverEndPoint = new IPEndPoint(_IPserver, 13000);
+            IPEndPoint _clientEndPoint = new IPEndPoint(_IPclient, 13000);
+            MessageTokenizer test = new MessageTokenizer();
+            //_clientSocket = new TcpClient(_server, _port);
+            _clientSocket = new TcpClient(_clientEndPoint);
+            _clientSocket.Connect(_serverEndPoint);
             _client = client;
+            
             StartReading();
         }
 
@@ -64,7 +72,8 @@ namespace NetworkLib
                 _lastPacket = new Packet();
                 while ((i = _stream.Read(data, 0, data.Length)) != 0)
                 {
-                    _lastPacket._content = System.Text.Encoding.ASCII.GetString(data, 0, i);
+                    string temp = System.Text.Encoding.ASCII.GetString(data, 0, i);
+                    _lastPacket = MessageTokenizer.CreatePacket(temp);
                     _client.ActionAfterRead(_lastPacket);
                 }
             }
@@ -75,7 +84,7 @@ namespace NetworkLib
             if (message[message.Length - 1] != '\n')
                 message += '\n';
 
-            Packet packet = new Packet(destIp, message);
+            Packet packet = new Packet(destIp, message, "1");
             
             // Send the message to the connected TcpServer. 
             _stream.Write(packet.Bytes, 0, packet.Bytes.Length);

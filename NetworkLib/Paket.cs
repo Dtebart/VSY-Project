@@ -14,7 +14,8 @@ namespace NetworkLib
         private IPAddress _srcIp;
         private IPAddress _destIp;
         internal string _content;
-
+        private string _messageType;
+        private char _split = '\t';
         // ---------------------- Constructors ----------------------
         public Packet()
         {
@@ -35,6 +36,15 @@ namespace NetworkLib
             _content = content;
             IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
             _srcIp = IPAddress.Parse(GetPublicIP());
+        }
+
+        public Packet(IPAddress destIp, string content, string messageType)
+        {
+            _destIp = destIp;
+            _content = content;
+            IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
+            _srcIp = IPAddress.Parse(GetPublicIP());
+            _messageType = messageType;
         }
 
         public Packet(IPAddress srcIp, IPAddress destIp, string content)
@@ -58,7 +68,7 @@ namespace NetworkLib
         }
         public Byte[] Bytes
         {
-            get { return System.Text.Encoding.ASCII.GetBytes(_content); }
+            get { return System.Text.Encoding.ASCII.GetBytes(_messageType + _split + _destIp.ToString() + _split + _content); }
         }
 
         // ---------------------- Functions ----------------------
