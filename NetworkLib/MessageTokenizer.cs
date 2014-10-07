@@ -26,6 +26,7 @@ namespace NetworkLib
 
             String[] values = _string.Split(_keychars);
             Packet reconstructedPacket = new Packet(IPAddress.Parse(values[1]), values[2], values[0]);
+            string abc = System.Text.Encoding.UTF8.GetString(reconstructedPacket.Bytes);
             return reconstructedPacket;
         }
 

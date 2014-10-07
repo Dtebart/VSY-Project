@@ -13,19 +13,15 @@ namespace VSY_Server
     class ServeThread
     {
         Thread thread;
-        ServerLink serverLink;
-        TcpClient client;
+        ServerLink _serverLink;
 
-        public ServeThread(ServerLink link, TcpClient client)
-        {
-            serverLink = link;
-            this.client = client;
-            thread = new Thread(this.serve);
+        public ServeThread(ServerLink link){
+            _serverLink = link;
         }
 
         public void serve()
         {
-            while (client.Connected)
+            while (_serverLink.Open())
             {
                 Packet Complete_message = ReadMessage();
                 HandleMessage(Complete_message);
@@ -34,29 +30,18 @@ namespace VSY_Server
 
         public void start()
         {
-            
             thread.Start();
-           // thread.Join();
-
         }
 
         private Packet ReadMessage()
         {
-            Packet receipt = serverLink.ReadChannel();
-            string full_message = receipt.Content;
-            while (receipt.Content[receipt.Content.Length - 1] != '\n')
-            {
-                receipt = serverLink.ReadChannel();
-                full_message += receipt.Content;
-            }
-            full_message = full_message.Remove(full_message.Length - 1);
-            Packet full_reciept = new Packet(receipt.SrcIp, receipt.DestIp, full_message);
-            return full_reciept;
+            Packet receipt = _serverLink.ReadChannel();
+            return receipt;
         }
 
         private void HandleMessage(Packet reciept)
         {
-            serverLink.WriteMessage(reciept.Content, IPAddress.Loopback);
+            _serverLink.WriteMessage(System.Text.Encoding.UTF8.GetString(reciept.Bytes), IPAddress.Loopback);
         }
     }
 }

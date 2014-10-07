@@ -27,10 +27,10 @@ namespace NetworkLib
         {
             _port = 13000;
             //_server = System.Environment.MachineName;
-            IPAddress _IPserver = IPAddress.Parse("178.201.223.250");
-            IPAddress _IPclient = IPAddress.Parse("192.168.220.104");
+            IPAddress _IPserver = IPAddress.Loopback;
+            IPAddress _IPclient = IPAddress.Loopback;
             IPEndPoint _serverEndPoint = new IPEndPoint(_IPserver, 13000);
-            IPEndPoint _clientEndPoint = new IPEndPoint(_IPclient, 13000);
+            IPEndPoint _clientEndPoint = new IPEndPoint(_IPclient, 0);
             MessageTokenizer test = new MessageTokenizer();
             //_clientSocket = new TcpClient(_server, _port);
             _clientSocket = new TcpClient(_clientEndPoint);

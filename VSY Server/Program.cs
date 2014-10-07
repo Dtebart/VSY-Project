@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
@@ -14,22 +15,16 @@ namespace VSY_Server
     {
         static void Main(string[] args)
         {
-            
+            TcpListener server = new TcpListener(IPAddress.Any, 13000);
+            ArrayList clientList = new ArrayList();
             try
             {
-                
-                ServerLink serverLink = new ServerLink();
                 while (true)
                 {
-
-                    
-                    TcpClient client = serverLink.Listen();
-                    ServeThread serveThread = new ServeThread(serverLink, client);
-
-                    //Packet receipt = serverLink.ReadChannel();
-                    //serverLink.WriteMessage(receipt.Content, IPAddress.Loopback);
+                    ServerLink serverLink = new ServerLink(server, clientList);
+                    serverLink.Listen();
+                    ServeThread serveThread = new ServeThread(serverLink);
                     serveThread.serve();
-               
                 }
             }
             catch (SocketException e)

@@ -31,6 +31,7 @@ namespace VSY_Client
         {
             InitializeComponent();
             Connect(System.Environment.MachineName);
+            MessageTokenizer abc = new MessageTokenizer();
         }
 
         private void Connect(String server)

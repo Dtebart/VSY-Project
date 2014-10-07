@@ -53,6 +53,7 @@ namespace NetworkLib
             _content = content;
         }
 
+
         // ---------------------- Getter/Setter ----------------------
         public IPAddress SrcIp
         {
