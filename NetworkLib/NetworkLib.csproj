@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="ClientLink.cs" />
     <Compile Include="IClient.cs" />
-    <Compile Include="MessageTokenizer.cs" />
+    <Compile Include="Link.cs" />
     <Compile Include="Paket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerLink.cs" />

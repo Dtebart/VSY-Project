@@ -16,12 +16,30 @@ namespace NetworkLib
         internal string _content;
         private string _messageType;
         private char _split = '\t';
+        private static string _globalIP = null;
         // ---------------------- Constructors ----------------------
+       
+        
+        
         public Packet()
         {
             _srcIp = IPAddress.Loopback;
             _destIp = IPAddress.Loopback;
             _content = String.Empty;
+        }
+
+        public Packet(string message)
+        {
+            if (_globalIP == null)
+            {
+                _globalIP = GetPublicIP();
+            }
+            char[] split = {'\t'};
+            String[] values = message.Split(split);
+            _messageType = values[0];
+            _destIp = IPAddress.Parse(values[1]);
+            _content = values[2];
+            _srcIp = IPAddress.Parse(_globalIP);
         }
 
         public Packet(IPAddress srcIp, IPAddress destIp){
@@ -32,18 +50,28 @@ namespace NetworkLib
 
         public Packet(IPAddress destIp, string content)
         {
+
+            if (_globalIP == null)
+            {
+                _globalIP = GetPublicIP();
+            }
             _destIp = destIp;
             _content = content;
             IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
-            _srcIp = IPAddress.Parse(GetPublicIP());
+            _srcIp = IPAddress.Parse(_globalIP);
+            _messageType = "1";
         }
 
         public Packet(IPAddress destIp, string content, string messageType)
         {
+            if (_globalIP == null)
+            {
+                _globalIP = GetPublicIP();
+            }
             _destIp = destIp;
             _content = content;
             IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
-            _srcIp = IPAddress.Parse(GetPublicIP());
+            _srcIp = IPAddress.Parse(_globalIP);
             _messageType = messageType;
         }
 

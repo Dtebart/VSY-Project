@@ -41,7 +41,7 @@ namespace VSY_Server
 
         private void HandleMessage(Packet reciept)
         {
-            _serverLink.WriteMessage(System.Text.Encoding.UTF8.GetString(reciept.Bytes), IPAddress.Loopback);
+            _serverLink.WriteMessage(reciept);
         }
     }
 }

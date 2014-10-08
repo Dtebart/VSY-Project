@@ -10,13 +10,10 @@ using System.Threading.Tasks;
 
 namespace NetworkLib
 {
-    public class ServerLink
+    public class ServerLink : Link
     {
         // ---------------------- Properties ----------------------
         private TcpListener _serverSocket;
-        private TcpClient _client;
-        private int _port;
-        private NetworkStream _stream;
         private ArrayList _clientList;
 
         // ---------------------- Constructors ----------------------
@@ -48,31 +45,7 @@ namespace NetworkLib
         }
 
         // ---------------------- Functions ----------------------
-        public Packet ReadChannel()
-        {
-            int i;
-            Byte[] dataBuffer = new Byte[256];
-            Packet receipt = new Packet();
 
-            do
-            {
-                i = _stream.Read(dataBuffer, 0, dataBuffer.Length);
-                // Translate data bytes to a ASCII string.
-                string message = System.Text.Encoding.ASCII.GetString(dataBuffer, 0, i);
-                Console.WriteLine("Received: {0}", message);
-
-                receipt._content += message;
-            } while(receipt.Content[receipt.Content.Length - 1] != '\n');
-            receipt = MessageTokenizer.CreatePacket(receipt._content);
-            return receipt;
-        }
-
-        public void WriteMessage(String message, IPAddress destIp)
-        {
-            Packet packet = MessageTokenizer.CreatePacket(message);
-            _stream.Write(packet.Bytes, 0, packet.Bytes.Length);
-            Console.WriteLine("Sent: {0}", message);
-        }
 
         public TcpClient Listen()
         {
