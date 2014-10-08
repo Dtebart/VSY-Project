@@ -46,19 +46,18 @@ namespace NetworkLib
 
         // ---------------------- Functions ----------------------
 
+ public TcpClient Listen()
+{
+_serverSocket.Start();
+_client = _serverSocket.AcceptTcpClient();
+_stream = _client.GetStream();
+Monitor.Enter(_clientList);
+_clientList.Add(_client);
+Monitor.Exit(_clientList);
+return _client;
+}
 
-        public TcpClient Listen()
-        {
-            _serverSocket.Start();
-            _client = _serverSocket.AcceptTcpClient();
-            _stream = _client.GetStream();
 
-            Monitor.Enter(_clientList);
-                _clientList.Add(_client);
-            Monitor.Exit(_clientList);
-
-            return _client;
-        }
 
         public bool Open()
         {

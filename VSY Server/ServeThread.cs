@@ -42,6 +42,7 @@ namespace VSY_Server
         private void HandleMessage(Packet reciept)
         {
             _serverLink.WriteMessage(reciept);
+
         }
     }
 }
