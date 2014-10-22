@@ -12,25 +12,41 @@ namespace VSY_Server
 {
     class ServeThread
     {
-        Thread thread;
-        ServerLink _serverLink;
+        private Thread _thread;
+        private ServerLink _serverLink;
+        private Dictionary<IPAddress, TcpClient> _clientList;
+        private bool _knownUser;
 
-        public ServeThread(ServerLink link){
+        public ServeThread(ServerLink link, Dictionary<IPAddress, TcpClient> clientList){
             _serverLink = link;
+            _clientList = clientList;
+            _knownUser = false;
+
+            ThreadStart serveDel = new ThreadStart(serve);
+            _thread = new Thread(serveDel);
         }
 
         public void serve()
         {
             while (_serverLink.Open())
             {
-                Packet Complete_message = ReadMessage();
-                HandleMessage(Complete_message);
+                Packet receipt = ReadMessage();
+
+                if (_knownUser == false)
+                {
+                    Monitor.Enter(_clientList);
+                        _clientList.Add(receipt.SrcIp, _serverLink.Client);
+                    Monitor.Exit(_clientList);
+                    _knownUser = true;
+                }
+
+                HandleMessage(receipt);
             }
         }
 
         public void start()
         {
-            thread.Start();
+            _thread.Start();
         }
 
         private Packet ReadMessage()
@@ -39,10 +55,10 @@ namespace VSY_Server
             return receipt;
         }
 
-        private void HandleMessage(Packet reciept)
+        private void HandleMessage(Packet receipt)
         {
-            _serverLink.WriteMessage(reciept);
-
+            TcpClient receiver = _clientList[receipt.DestIp];
+            _serverLink.WriteMessage(receipt, receiver.GetStream());
         }
     }
 }

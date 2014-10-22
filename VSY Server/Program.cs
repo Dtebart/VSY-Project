@@ -16,15 +16,15 @@ namespace VSY_Server
         static void Main(string[] args)
         {
             TcpListener server = new TcpListener(IPAddress.Any, 13000);
-            ArrayList clientList = new ArrayList();
+            Dictionary<IPAddress,TcpClient> clientList = new Dictionary<IPAddress,TcpClient>();
             try
             {
                 while (true)
                 {
-                    ServerLink serverLink = new ServerLink(server, clientList);
+                    ServerLink serverLink = new ServerLink(server);
                     serverLink.Listen();
-                    ServeThread serveThread = new ServeThread(serverLink);
-                    serveThread.serve();
+                    ServeThread serveThread = new ServeThread(serverLink, clientList);
+                    serveThread.start();
                 }
             }
             catch (SocketException e)

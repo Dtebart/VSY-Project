@@ -54,6 +54,13 @@ namespace NetworkLib
             _stream.Write(message.Bytes, 0, message.Bytes.Length);
         }
 
+        public void WriteMessage(Packet message, NetworkStream destStream)
+        {
+            if (message._content[message._content.Length - 1] != '\n')
+                message._content += '\n';
+
+            destStream.Write(message.Bytes, 0, message.Bytes.Length);
+        }
     }
 }
 

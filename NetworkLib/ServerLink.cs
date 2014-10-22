@@ -14,7 +14,6 @@ namespace NetworkLib
     {
         // ---------------------- Properties ----------------------
         private TcpListener _serverSocket;
-        private ArrayList _clientList;
 
         // ---------------------- Constructors ----------------------
         public ServerLink()
@@ -31,11 +30,10 @@ namespace NetworkLib
             _serverSocket.Start();
         }
 
-        public ServerLink(TcpListener serverSocket, ArrayList clientList)
+        public ServerLink(TcpListener serverSocket)
         {
             _port = 13000;
             _serverSocket = serverSocket;
-            _clientList = clientList;
         }
 
         // ---------------------- Getter/Setter ----------------------
@@ -44,20 +42,20 @@ namespace NetworkLib
             get { return _serverSocket; }
         }
 
+        public TcpClient Client
+        {
+            get { return _client; }
+        }
+
         // ---------------------- Functions ----------------------
 
- public TcpClient Listen()
-{
-_serverSocket.Start();
-_client = _serverSocket.AcceptTcpClient();
-_stream = _client.GetStream();
-Monitor.Enter(_clientList);
-_clientList.Add(_client);
-Monitor.Exit(_clientList);
-return _client;
-}
-
-
+        public TcpClient Listen()
+        {
+            _serverSocket.Start();
+            _client = _serverSocket.AcceptTcpClient();
+            _stream = _client.GetStream();
+            return _client;
+        }
 
         public bool Open()
         {

@@ -17,10 +17,9 @@ namespace NetworkLib
         private string _messageType;
         private char _split = '\t';
         private static string _globalIP = null;
+
         // ---------------------- Constructors ----------------------
-       
-        
-        
+      
         public Packet()
         {
             _srcIp = IPAddress.Loopback;
