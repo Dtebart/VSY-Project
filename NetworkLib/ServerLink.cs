@@ -60,7 +60,7 @@ namespace NetworkLib
             _client = _serverSocket.AcceptTcpClient();
             _stream = _client.GetStream();
 
-            IPEndPoint clientPoint = (IPEndPoint)_client.Client.LocalEndPoint;
+            IPEndPoint clientPoint = (IPEndPoint)_client.Client.RemoteEndPoint;
             IPAddress srcIp = clientPoint.Address;
 
             Monitor.Enter(_clientList);
