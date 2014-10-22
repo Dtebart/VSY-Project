@@ -21,9 +21,9 @@ namespace VSY_Server
             {
                 while (true)
                 {
-                    ServerLink serverLink = new ServerLink(server);
+                    ServerLink serverLink = new ServerLink(server, clientList);
                     serverLink.Listen();
-                    ServeThread serveThread = new ServeThread(serverLink, clientList);
+                    ServeThread serveThread = new ServeThread(serverLink);
                     serveThread.start();
                 }
             }

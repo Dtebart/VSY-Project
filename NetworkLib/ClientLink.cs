@@ -21,8 +21,10 @@ namespace NetworkLib
         public ClientLink(IClient client)
         {
             _port = 13000;
-            IPAddress _IPserver = IPAddress.Loopback;
-            IPAddress _IPclient = IPAddress.Loopback;
+            //IPAddress _IPserver = IPAddress.Parse("178.201.225.83");
+            //IPAddress _IPclient = IPAddress.Parse("192.168.220.104");
+            IPAddress _IPserver = IPAddress.Parse("127.0.0.1");
+            IPAddress _IPclient = IPAddress.Parse("127.0.0.1");
             IPEndPoint _serverEndPoint = new IPEndPoint(_IPserver, 13000);
             IPEndPoint _clientEndPoint = new IPEndPoint(_IPclient, 0);
             _client = new TcpClient(_clientEndPoint);
