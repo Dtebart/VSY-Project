@@ -20,9 +20,9 @@ namespace NetworkLib
         // Server is the same as the client; only for debugging purposes
         public ClientLink(IClient client)
         {
-            _port = 13000;
+            _port = 13000;           
             IPAddress _IPserver = IPAddress.Parse("178.201.225.83");
-            IPAddress _IPclient = IPAddress.Parse("192.168.0.101");
+            IPAddress _IPclient = GetLocalIP();
             IPEndPoint _serverEndPoint = new IPEndPoint(_IPserver, 13000);
             IPEndPoint _clientEndPoint = new IPEndPoint(_IPclient, 0);
             _client = new TcpClient(_clientEndPoint);
@@ -64,6 +64,22 @@ namespace NetworkLib
         {
             // get rid of read thread
             _readThread.Abort();
+        }
+
+        public IPAddress GetLocalIP()
+        {
+            IPHostEntry host;
+            String localIP = "?";
+            host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                
+                if (ip.AddressFamily.ToString() == "InterNetwork")
+                {
+                    localIP = ip.ToString();
+                }
+            }
+            return IPAddress.Parse(localIP);
         }
     }
 }
