@@ -59,10 +59,12 @@ namespace NetworkLib
             _serverSocket.Start();
             _client = _serverSocket.AcceptTcpClient();
             _stream = _client.GetStream();
+
+            IPEndPoint clientPoint = (IPEndPoint)_client.Client.RemoteEndPoint;
+            IPAddress srcIp = clientPoint.Address;
+
             Monitor.Enter(_clientList);
-            IPEndPoint bla = (IPEndPoint)_client.Client.RemoteEndPoint;
-            IPAddress srcIp = bla.Address; ;
-            _clientList.Add(srcIp, Client);
+                _clientList.Add(srcIp, Client);
             Monitor.Exit(_clientList);
             return _client;
         }

@@ -30,9 +30,6 @@ namespace VSY_Server
             while (_serverLink.Open())
             {
                 Packet receipt = ReadMessage();
-
-
-
                 HandleMessage(receipt);
             }
         }

@@ -51,7 +51,7 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _link.WriteMessage(messageBox.Text, IPAddress.Parse("127.0.0.1"));
+            _link.WriteMessage(messageBox.Text, IPAddress.Parse("178.201.225.83"));
             messageBox.Text = "";
         }
 

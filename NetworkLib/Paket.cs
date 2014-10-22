@@ -11,7 +11,6 @@ namespace NetworkLib
     public class Packet
     {
         // ---------------------- Properties ----------------------
-        private IPAddress _srcIp;
         private IPAddress _destIp;
         internal string _content;
         private string _messageType;
@@ -22,7 +21,6 @@ namespace NetworkLib
       
         public Packet()
         {
-            _srcIp = IPAddress.Loopback;
             _destIp = IPAddress.Loopback;
             _content = String.Empty;
         }
@@ -38,26 +36,18 @@ namespace NetworkLib
             _messageType = values[0];
             _destIp = IPAddress.Parse(values[1]);
             _content = values[2];
-            _srcIp = IPAddress.Parse(_globalIP);
         }
 
         public Packet(IPAddress srcIp, IPAddress destIp){
-            _srcIp = srcIp;
             _destIp = destIp;
             _content = String.Empty;
         }
 
         public Packet(IPAddress destIp, string content)
         {
-
-            if (_globalIP == null)
-            {
-                _globalIP = GetPublicIP();
-            }
             _destIp = destIp;
             _content = content;
             IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
-            _srcIp = IPAddress.Parse(_globalIP);
             _messageType = "1";
         }
 
@@ -70,7 +60,6 @@ namespace NetworkLib
             _destIp = destIp;
             _content = content;
             IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
-            _srcIp = IPAddress.Parse(_globalIP);
             _messageType = messageType;
         }
 
@@ -82,10 +71,6 @@ namespace NetworkLib
 
 
         // ---------------------- Getter/Setter ----------------------
-        public IPAddress SrcIp
-        {
-            get { return _srcIp; }
-        }
         public IPAddress DestIp
         {
             get { return _destIp; }
