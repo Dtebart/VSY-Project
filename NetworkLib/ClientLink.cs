@@ -20,8 +20,8 @@ namespace NetworkLib
         // Server is the same as the client; only for debugging purposes
         public ClientLink(IClient client)
         {
-            _port = 13000;           
-            IPAddress _IPserver = IPAddress.Parse("178.201.225.83");
+            _port = 13000;
+            IPAddress _IPserver = IPAddress.Parse("77.9.81.234");
             IPAddress _IPclient = GetLocalIP();
             IPEndPoint _serverEndPoint = new IPEndPoint(_IPserver, 13000);
             IPEndPoint _clientEndPoint = new IPEndPoint(_IPclient, 0);

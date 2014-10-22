@@ -37,11 +37,11 @@ namespace NetworkLib
             return receipt;
         }
 
-        public void WriteMessage(String message, IPAddress destIp)
+        public void WriteMessage(String message, string destUser)
         {
             if (message[message.Length - 1] != '\n')
                 message += '\n';
-            Packet packet = new Packet(destIp, message);
+            Packet packet = new Packet(destUser, message);
             // Send the message to the connected TcpServer. 
             _stream.Write(packet.Bytes, 0, packet.Bytes.Length);
         }

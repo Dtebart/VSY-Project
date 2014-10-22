@@ -14,7 +14,7 @@ namespace NetworkLib
     {
         // ---------------------- Properties ----------------------
         private TcpListener _serverSocket;
-        private Dictionary<IPAddress, TcpClient> _clientList;
+        private Dictionary<string, TcpClient> _clientList;
         // ---------------------- Constructors ----------------------
         public ServerLink()
         {
@@ -30,7 +30,7 @@ namespace NetworkLib
             _serverSocket.Start();
         }
 
-        public ServerLink(TcpListener serverSocket, Dictionary<IPAddress, TcpClient> clientList)
+        public ServerLink(TcpListener serverSocket, Dictionary<string, TcpClient> clientList)
         {
             _port = 13000;
             _serverSocket = serverSocket;
@@ -47,7 +47,7 @@ namespace NetworkLib
         {
             get { return _client; }
         }
-        public Dictionary<IPAddress, TcpClient> ClientList
+        public Dictionary<string, TcpClient> ClientList
         {
             get { return _clientList; }
         }
@@ -60,11 +60,11 @@ namespace NetworkLib
             _client = _serverSocket.AcceptTcpClient();
             _stream = _client.GetStream();
 
-            IPEndPoint clientPoint = (IPEndPoint)_client.Client.RemoteEndPoint;
+            IPEndPoint clientPoint = (IPEndPoint)_client.Client.LocalEndPoint;
             IPAddress srcIp = clientPoint.Address;
 
             Monitor.Enter(_clientList);
-                _clientList.Add(srcIp, Client);
+                _clientList.Add(srcIp.ToString(), Client);
             Monitor.Exit(_clientList);
             return _client;
         }

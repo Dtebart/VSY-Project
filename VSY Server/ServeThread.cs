@@ -47,7 +47,7 @@ namespace VSY_Server
 
         private void HandleMessage(Packet receipt)
         {
-            TcpClient receiver = _serverLink.ClientList[receipt.DestIp];
+            TcpClient receiver = _serverLink.ClientList[receipt.DestUser];
             _serverLink.WriteMessage(receipt, receiver.GetStream());
         }
     }

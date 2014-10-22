@@ -16,7 +16,7 @@ namespace VSY_Server
         static void Main(string[] args)
         {
             TcpListener server = new TcpListener(IPAddress.Any, 13000);
-            Dictionary<IPAddress,TcpClient> clientList = new Dictionary<IPAddress,TcpClient>();
+            Dictionary<string,TcpClient> clientList = new Dictionary<string,TcpClient>();
             try
             {
                 while (true)

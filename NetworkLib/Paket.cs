@@ -11,69 +11,51 @@ namespace NetworkLib
     public class Packet
     {
         // ---------------------- Properties ----------------------
-        private IPAddress _destIp;
+        private string _destUser;
         internal string _content;
         private string _messageType;
         private char _split = '\t';
-        private static string _globalIP = null;
 
         // ---------------------- Constructors ----------------------
       
         public Packet()
         {
-            _destIp = IPAddress.Loopback;
+            //_destIp = IPAddress.Loopback;
             _content = String.Empty;
         }
 
         public Packet(string message)
         {
-            if (_globalIP == null)
-            {
-                _globalIP = GetPublicIP();
-            }
             char[] split = {'\t'};
             String[] values = message.Split(split);
             _messageType = values[0];
-            _destIp = IPAddress.Parse(values[1]);
+            _destUser = values[1];
             _content = values[2];
         }
 
-        public Packet(IPAddress srcIp, IPAddress destIp){
-            _destIp = destIp;
-            _content = String.Empty;
-        }
 
-        public Packet(IPAddress destIp, string content)
+        public Packet(string destUser, string content)
         {
-            _destIp = destIp;
+            _destUser = destUser;
             _content = content;
             IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
             _messageType = "1";
         }
 
-        public Packet(IPAddress destIp, string content, string messageType)
+        public Packet(string destUser, string content, string messageType)
         {
-            if (_globalIP == null)
-            {
-                _globalIP = GetPublicIP();
-            }
-            _destIp = destIp;
+            _destUser = destUser;
             _content = content;
             IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
             _messageType = messageType;
         }
 
-        public Packet(IPAddress srcIp, IPAddress destIp, string content)
-            : this(srcIp, destIp)
-        {
-            _content = content;
-        }
 
 
         // ---------------------- Getter/Setter ----------------------
-        public IPAddress DestIp
+        public string DestUser
         {
-            get { return _destIp; }
+            get { return _destUser; }
         }
         public string Content
         {
@@ -81,22 +63,9 @@ namespace NetworkLib
         }
         public Byte[] Bytes
         {
-            get { return System.Text.Encoding.ASCII.GetBytes(_messageType + _split + _destIp.ToString() + _split + _content); }
+            get { return System.Text.Encoding.ASCII.GetBytes(_messageType + _split + _destUser + _split + _content); }
         }
 
         // ---------------------- Functions ----------------------
-        private static string GetPublicIP()
-        {
-            string url = "http://checkip.dyndns.org";
-            System.Net.WebRequest req = System.Net.WebRequest.Create(url);
-            System.Net.WebResponse resp = req.GetResponse();
-            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
-            string response = sr.ReadToEnd().Trim();
-            string[] a = response.Split(':');
-            string a2 = a[1].Substring(1);
-            string[] a3 = a2.Split('<');
-            string a4 = a3[0];
-            return a4;
-        }
     }
 }
