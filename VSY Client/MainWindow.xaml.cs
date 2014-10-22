@@ -26,6 +26,7 @@ namespace VSY_Client
     public partial class MainWindow : Window, IClient
     {
         private ClientLink _link;
+        private String _receiver;
 
         public MainWindow()
         {
@@ -51,7 +52,7 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _link.WriteMessage(messageBox.Text, "192.168.220.104");
+            _link.WriteMessage(messageBox.Text, _receiver);
             messageBox.Text = "";
         }
 
@@ -64,6 +65,30 @@ namespace VSY_Client
         {
             _link.Close();
             _link = null;
+        }
+
+        private void addFriendButton_Click(object sender, RoutedEventArgs e)
+        {
+            ListBoxItem newFriend = new ListBoxItem();
+            newFriend.Content = addFriendTextBox.Text;
+            newFriend.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(friendListItem_MouseDown), true);
+            addFriendTextBox.Text = String.Empty;
+            friendsListBox.Items.Add(newFriend);
+        }
+
+        private void friendListItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem selectedFriend = (ListBoxItem)e.Source;
+
+            _receiver = selectedFriend.Content.ToString();
+            int buttonTextPlaceStart = sendButton.Content.ToString().IndexOf("-");
+            int buttonTextPlaceEnd = sendButton.Content.ToString().LastIndexOf("-");
+            String oldReceiver = sendButton.Content.ToString().Substring(buttonTextPlaceStart + 1, buttonTextPlaceEnd - buttonTextPlaceStart - 1);
+            sendButton.Content = sendButton.Content.ToString().Replace(oldReceiver, _receiver);
+        }
+
+        private void friendsListBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
         }
     }
 }
