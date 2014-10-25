@@ -28,14 +28,13 @@ namespace VSY_Client
         private ClientLink _link;
         private String _receiver;
         public delegate void ActionDel(String name);
-
         public MainWindow()
         {
+            _receiver = "";
             InitializeComponent();
             Connect(System.Environment.MachineName);
             FetchFriendlist();
         }
-
         private void Connect(String server)
         {
             try
@@ -51,18 +50,20 @@ namespace VSY_Client
                 Console.WriteLine("SocketException: {0}", e);
             }
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Packet textMessage = new Packet(_receiver, messageBox.Text, MessageTypes.TextMessage);
-            _link.WriteMessage(textMessage);
-            messageBox.Text = "";
+            if (messageBox.Text != "" && _receiver != "")
+            {
+                receivedMessageBox.Text += "Ich: " + messageBox.Text + "\n";
+                Packet textMessage = new Packet(_receiver, messageBox.Text, MessageTypes.TextMessage);
+                _link.WriteMessage(textMessage);
+                messageBox.Text = "";
+            }
         }
-
         public void ActionAfterRead(Packet receipt)
         {
             if (receipt.Type == MessageTypes.TextMessage)
-                Dispatcher.BeginInvoke(new Action(() => receivedMessageBox.Text += receipt.Content + "\n"));
+                Dispatcher.BeginInvoke(new Action(() => receivedMessageBox.Text += receipt.Content));
             else if (receipt.Type == MessageTypes.GetFriendlist)
             {
                 List<String> friendlist = receipt.AdditionalArgs;
@@ -73,25 +74,21 @@ namespace VSY_Client
                 }
             }
         }
-
         private void FetchFriendlist()
         {
             Packet friendlistRequest = new Packet("178.201.225.83", "GetFriends", MessageTypes.GetFriendlist);
             _link.WriteMessage(friendlistRequest);
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             _link.Close();
             _link = null;
         }
-
         private void addFriendButton_Click(object sender, RoutedEventArgs e)
         {
             addFriendEntry(addFriendTextBox.Text);
             addFriendTextBox.Text = String.Empty;
         }
-
         private void addFriendEntry(String name)
         {
             ListBoxItem newFriend = new ListBoxItem();
@@ -99,18 +96,15 @@ namespace VSY_Client
             newFriend.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(friendListItem_MouseDown), true);
             friendsListBox.Items.Add(newFriend);
         }
-
         private void friendListItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ListBoxItem selectedFriend = (ListBoxItem)e.Source;
-
             _receiver = selectedFriend.Content.ToString();
             int buttonTextPlaceStart = sendButton.Content.ToString().IndexOf("-");
             int buttonTextPlaceEnd = sendButton.Content.ToString().LastIndexOf("-");
             String oldReceiver = sendButton.Content.ToString().Substring(buttonTextPlaceStart + 1, buttonTextPlaceEnd - buttonTextPlaceStart - 1);
             sendButton.Content = sendButton.Content.ToString().Replace(oldReceiver, _receiver);
         }
-
         private void friendsListBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
         }
