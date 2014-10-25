@@ -47,6 +47,7 @@ namespace NetworkLib
             // Start thread for reading data
             ThreadStart readDel = new ThreadStart(Serve);
             _readThread = new Thread(readDel);
+            _readThread.SetApartmentState(ApartmentState.STA);
 
             _readThread.Start();
         }
@@ -69,7 +70,7 @@ namespace NetworkLib
         public IPAddress GetLocalIP()
         {
             IPHostEntry host;
-            String localIP = "?";
+            String localIP = String.Empty;
             host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (IPAddress ip in host.AddressList)
             {

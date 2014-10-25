@@ -27,11 +27,13 @@ namespace VSY_Client
     {
         private ClientLink _link;
         private String _receiver;
+        public delegate void ActionDel(String name);
 
         public MainWindow()
         {
             InitializeComponent();
             Connect(System.Environment.MachineName);
+            FetchFriendlist();
         }
 
         private void Connect(String server)
@@ -52,13 +54,30 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _link.WriteMessage(messageBox.Text, _receiver);
+            Packet textMessage = new Packet(_receiver, messageBox.Text, MessageTypes.TextMessage);
+            _link.WriteMessage(textMessage);
             messageBox.Text = "";
         }
 
         public void ActionAfterRead(Packet receipt)
         {
-            Dispatcher.BeginInvoke(new Action(() => receivedMessageBox.Text += receipt.Content + "\n"));
+            if (receipt.Type == MessageTypes.TextMessage)
+                Dispatcher.BeginInvoke(new Action(() => receivedMessageBox.Text += receipt.Content + "\n"));
+            else if (receipt.Type == MessageTypes.GetFriendlist)
+            {
+                List<String> friendlist = receipt.AdditionalArgs;
+                for (int i = 0; i < friendlist.Count; i++)
+                {
+                    ActionDel addFriend = addFriendEntry;
+                    Dispatcher.Invoke(addFriend, friendlist[i]);
+                }
+            }
+        }
+
+        private void FetchFriendlist()
+        {
+            Packet friendlistRequest = new Packet("178.201.225.83", "GetFriends", MessageTypes.GetFriendlist);
+            _link.WriteMessage(friendlistRequest);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -69,10 +88,15 @@ namespace VSY_Client
 
         private void addFriendButton_Click(object sender, RoutedEventArgs e)
         {
-            ListBoxItem newFriend = new ListBoxItem();
-            newFriend.Content = addFriendTextBox.Text;
-            newFriend.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(friendListItem_MouseDown), true);
+            addFriendEntry(addFriendTextBox.Text);
             addFriendTextBox.Text = String.Empty;
+        }
+
+        private void addFriendEntry(String name)
+        {
+            ListBoxItem newFriend = new ListBoxItem();
+            newFriend.Content = name;
+            newFriend.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(friendListItem_MouseDown), true);
             friendsListBox.Items.Add(newFriend);
         }
 

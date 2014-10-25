@@ -15,8 +15,6 @@ namespace VSY_Server
         private Thread _thread;
         private ServerLink _serverLink;
 
-
-
         public ServeThread(ServerLink link){
             _serverLink = link;
 
@@ -47,8 +45,10 @@ namespace VSY_Server
 
         private void HandleMessage(Packet receipt)
         {
-            TcpClient receiver = _serverLink.ClientList[receipt.DestUser];
-            _serverLink.WriteMessage(receipt, receiver.GetStream());
+            RequestHandler requestHandler = RequestHandler.GetHandler(receipt.Type);
+            Packet processedPacket = requestHandler.HandleRequest(receipt);
+            TcpClient receiver = _serverLink.ClientList[processedPacket.DestUser];
+            _serverLink.WriteMessage(processedPacket, receiver.GetStream());
         }
     }
 }

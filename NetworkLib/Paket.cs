@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace NetworkLib
 {
+    public enum MessageTypes { TextMessage, Login, Registrate, GetFriendlist };
     public class Packet
     {
         // ---------------------- Properties ----------------------
         private string _destUser;
         internal string _content;
-        private string _messageType;
-        private char _split = '\t';
+        private MessageTypes _messageType;
+        private List<String> _additionalArgs = new List<String>();
+        private const char _splitToken = '\t';
 
         // ---------------------- Constructors ----------------------
       
@@ -26,11 +28,16 @@ namespace NetworkLib
 
         public Packet(string message)
         {
-            char[] split = {'\t'};
-            String[] values = message.Split(split);
-            _messageType = values[0];
+            String[] values = message.Split(_splitToken);
+            _messageType = (MessageTypes) Int32.Parse(values[0]);
             _destUser = values[1];
-            _content = values[2];
+           
+            for (int i = 2; i < values.Length - 1; i++)
+            {
+                AddParam(values[i]);
+            }
+
+            _content = values[values.Length - 1];
         }
 
 
@@ -38,19 +45,15 @@ namespace NetworkLib
         {
             _destUser = destUser;
             _content = content;
-            IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
-            _messageType = "1";
+            _messageType = MessageTypes.TextMessage;
         }
 
-        public Packet(string destUser, string content, string messageType)
+        public Packet(string destUser, string content, MessageTypes messageType)
         {
             _destUser = destUser;
             _content = content;
-            IPHostEntry ipHost = Dns.GetHostEntry(System.Environment.MachineName);
             _messageType = messageType;
         }
-
-
 
         // ---------------------- Getter/Setter ----------------------
         public string DestUser
@@ -61,11 +64,41 @@ namespace NetworkLib
         {
             get { return _content; }
         }
+        public MessageTypes Type
+        {
+            get { return _messageType; }
+        }
+
+        public String AdditionalArgsText
+        {
+            get {
+                String argContent = String.Empty;
+                for (int i = 0; i < _additionalArgs.Count; i++)
+                {
+                    argContent += _additionalArgs[i].ToString() + _splitToken;
+                }
+                return argContent;
+            }
+        }
+
+        public List<String> AdditionalArgs
+        {
+            get { return _additionalArgs; }
+        }
+
         public Byte[] Bytes
         {
-            get { return System.Text.Encoding.ASCII.GetBytes(_messageType + _split + _destUser + _split + _content); }
+            get {
+                String messageText = ((int)_messageType).ToString() + _splitToken + _destUser + _splitToken + AdditionalArgsText + _content;
+                return System.Text.Encoding.ASCII.GetBytes(messageText); 
+            }
         }
 
         // ---------------------- Functions ----------------------
+
+        public void AddParam(String param)
+        {
+            _additionalArgs.Add(param);
+        }
     }
 }

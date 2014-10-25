@@ -40,10 +40,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientLink.cs" />
+    <Compile Include="FriendlistHandler.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="Link.cs" />
+    <Compile Include="MessageRequestHandler.cs" />
     <Compile Include="Paket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestHandler.cs" />
     <Compile Include="ServerLink.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

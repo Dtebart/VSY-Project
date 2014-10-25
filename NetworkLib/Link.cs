@@ -22,18 +22,20 @@ namespace NetworkLib
         {
             int i;
             Byte[] dataBuffer = new Byte[256];
-            Packet receipt = new Packet();
+            Packet receipt;
+
+            string message = String.Empty;
 
             do
             {
                 i = _stream.Read(dataBuffer, 0, dataBuffer.Length);
                 // Translate data bytes to a ASCII string.
-                string message = System.Text.Encoding.ASCII.GetString(dataBuffer, 0, i);
-                Console.WriteLine("Received: {0}", message);
+                message += System.Text.Encoding.ASCII.GetString(dataBuffer, 0, i);
 
-                receipt._content += message;
-            } while (receipt.Content[receipt.Content.Length - 1] != '\n');
-            receipt = new Packet(receipt._content);
+            } while (message[message.Length - 1] != '\n');
+
+            Console.WriteLine("Received: {0}", message);
+            receipt = new Packet(message);
             return receipt;
         }
 
