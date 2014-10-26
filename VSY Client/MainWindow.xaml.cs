@@ -33,7 +33,7 @@ namespace VSY_Client
         {
             _receiver = "";            
             InitializeComponent();
-            _userName = _link.GetLocalIP().ToString();
+            _userName = ClientLink.GetLocalIP().ToString();
 
         }
         private void Button_Click(object sender, RoutedEventArgs e)

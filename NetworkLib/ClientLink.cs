@@ -67,7 +67,7 @@ namespace NetworkLib
             _readThread.Abort();
         }
 
-        public IPAddress GetLocalIP()
+        public static IPAddress GetLocalIP()
         {
             IPHostEntry host;
             String localIP = String.Empty;
