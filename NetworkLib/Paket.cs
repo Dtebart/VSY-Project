@@ -32,8 +32,9 @@ namespace NetworkLib
             String[] values = message.Split(_splitToken);
             _messageType = (MessageTypes) Int32.Parse(values[0]);
             _destUser = values[1];
+            _srcUser = values[2];
            
-            for (int i = 2; i < values.Length - 1; i++)
+            for (int i = 3; i < values.Length - 1; i++)
             {
                 AddParam(values[i]);
             }
@@ -54,6 +55,7 @@ namespace NetworkLib
             _destUser = destUser;
             _content = content;
             _messageType = messageType;
+            _srcUser = "NOTSET";
         }
 
         public Packet(string srcUser, string destUser, string content, MessageTypes messageType)
@@ -76,6 +78,11 @@ namespace NetworkLib
             get { return _messageType; }
         }
 
+        public string SrcUser
+        {
+            get { return _srcUser; }
+        }
+
         public String AdditionalArgsText
         {
             get {
@@ -96,7 +103,7 @@ namespace NetworkLib
         public Byte[] Bytes
         {
             get {
-                String messageText = ((int)_messageType).ToString() + _splitToken + _destUser + _splitToken + AdditionalArgsText + _content;
+                String messageText = ((int)_messageType).ToString() + _splitToken + _destUser + _splitToken + _srcUser + _splitToken + AdditionalArgsText + _content;
                 return System.Text.Encoding.ASCII.GetBytes(messageText); 
             }
         }

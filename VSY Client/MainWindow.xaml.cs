@@ -27,12 +27,14 @@ namespace VSY_Client
     {
         private ClientLink _link;
         private String _receiver;
+        private String _userName;
         public delegate void ActionDel(String name);
         public MainWindow()
         {
-            _receiver = "";
+            _receiver = "";            
             InitializeComponent();
             Connect(System.Environment.MachineName);
+            _userName = _link.GetLocalIP().ToString();
             FetchFriendlist();
         }
         private void Connect(String server)
@@ -55,7 +57,7 @@ namespace VSY_Client
             if (messageBox.Text != "" && _receiver != "")
             {
                 receivedMessageBox.Text += "Ich: " + messageBox.Text + "\n";
-                Packet textMessage = new Packet(_receiver, messageBox.Text, MessageTypes.TextMessage);
+                Packet textMessage = new Packet(_userName, _receiver, messageBox.Text, MessageTypes.TextMessage);
                 _link.WriteMessage(textMessage);
                 messageBox.Text = "";
             }
@@ -76,7 +78,7 @@ namespace VSY_Client
         }
         private void FetchFriendlist()
         {
-            Packet friendlistRequest = new Packet("178.201.225.83", "GetFriends", MessageTypes.GetFriendlist);
+            Packet friendlistRequest = new Packet(_userName, "178.201.225.83", "GetFriends", MessageTypes.GetFriendlist);
             _link.WriteMessage(friendlistRequest);
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
