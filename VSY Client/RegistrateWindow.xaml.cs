@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Net.Sockets;
+using NetworkLib;
 
 namespace VSY_Client
 {
@@ -26,8 +28,27 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow chatWindow = new MainWindow();
+            ClientLink link;
+            try
+            {
+                link = new ClientLink(chatWindow);
+                chatWindow._link = link;
+            }
+            catch (ArgumentNullException excep)
+            {
+                Console.WriteLine("ArgumentNullException: {0}", excep);
+            }
+            catch (SocketException excep)
+            {
+                Console.WriteLine("SocketException: {0}", excep);
+            }
+
+            Window mainWindow = App.Current.MainWindow;
 
             Close();
+            mainWindow.Close();
+            chatWindow.Show();
         }
     }
 }

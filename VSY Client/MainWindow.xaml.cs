@@ -25,30 +25,13 @@ namespace VSY_Client
     /// </summary>
     public partial class MainWindow : Window, IClient
     {
-        private ClientLink _link;
+        public ClientLink _link;
         private String _receiver;
         public delegate void ActionDel(String name);
         public MainWindow()
         {
             _receiver = "";
             InitializeComponent();
-            Connect(System.Environment.MachineName);
-            FetchFriendlist();
-        }
-        private void Connect(String server)
-        {
-            try
-            {
-                _link = new ClientLink(this);
-            }
-            catch (ArgumentNullException e)
-            {
-                Console.WriteLine("ArgumentNullException: {0}", e);
-            }
-            catch (SocketException e)
-            {
-                Console.WriteLine("SocketException: {0}", e);
-            }
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -107,6 +90,15 @@ namespace VSY_Client
         }
         private void friendsListBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
+        }
+
+        private void Grid_Initialized(object sender, EventArgs e)
+        {
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            FetchFriendlist();
         }
     }
 }
