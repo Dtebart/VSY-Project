@@ -28,3 +28,7 @@ C:\Users\Schmax\DerInstantMessenger\VSY Client\obj\Debug\VSY_Client.Properties.R
 C:\Users\Schmax\DerInstantMessenger\VSY Client\obj\Debug\VSY Client.csproj.GenerateResource.Cache
 C:\Users\Schmax\DerInstantMessenger\VSY Client\obj\Debug\VSY Client.exe
 C:\Users\Schmax\DerInstantMessenger\VSY Client\obj\Debug\VSY Client.pdb
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\StartWindow.baml
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\StartWindow.g.cs
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\RegistrateWindow.baml
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\RegistrateWindow.g.cs
