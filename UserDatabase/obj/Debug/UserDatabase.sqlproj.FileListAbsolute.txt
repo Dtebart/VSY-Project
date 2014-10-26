@@ -1,0 +1,5 @@
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\UserDatabase\bin\Debug\UserDatabase.dacpac
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\UserDatabase\obj\Debug\UserDatabase.dll
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\UserDatabase\obj\Debug\UserDatabase.pdb
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\UserDatabase\bin\Debug\UserDatabase.dll
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\UserDatabase\bin\Debug\UserDatabase.pdb
