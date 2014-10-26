@@ -12,6 +12,7 @@ namespace NetworkLib
     public class Packet
     {
         // ---------------------- Properties ----------------------
+        private string _srcUser;
         private string _destUser;
         internal string _content;
         private MessageTypes _messageType;
@@ -53,6 +54,12 @@ namespace NetworkLib
             _destUser = destUser;
             _content = content;
             _messageType = messageType;
+        }
+
+        public Packet(string srcUser, string destUser, string content, MessageTypes messageType)
+            : this(destUser, content, messageType)
+        {
+            _srcUser = srcUser;
         }
 
         // ---------------------- Getter/Setter ----------------------
