@@ -21,6 +21,8 @@ namespace VSY_Client
     /// </summary>
     public partial class RegistrateWindow : Window
     {
+        public delegate void ResponseAction(String response);
+        private ClientLink _link;
         public RegistrateWindow()
         {
             InitializeComponent();
@@ -28,15 +30,19 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
-            ClientLink link;
             try
             {
-                link = new ClientLink(chatWindow);
-                chatWindow._link = link;
+                MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
+                _link = new ClientLink(chatWindow);
                 Packet registrateRequest = new Packet(userNameTextBox.Text, userNameTextBox.Text, "Registration", MessageTypes.Registrate);
                 registrateRequest.AddParam(passwordTextBox.Password);
-                link.WriteMessage(registrateRequest);
+                _link.WriteMessage(registrateRequest);
+
+                Window mainWindow = App.Current.MainWindow;
+
+                mainWindow.Close();
+                Close();
+                chatWindow.Show();
             }
             catch (ArgumentNullException excep)
             {
@@ -46,12 +52,6 @@ namespace VSY_Client
             {
                 Console.WriteLine("SocketException: {0}", excep);
             }
-
-            Window mainWindow = App.Current.MainWindow;
-
-            Close();
-            mainWindow.Close();
-            chatWindow.Show();
         }
     }
 }

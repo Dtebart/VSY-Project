@@ -66,6 +66,7 @@
     <Compile Include="RequestHandler\RequestHandler.cs" />
     <Compile Include="ServerLink.cs" />
     <Compile Include="UserDBApp.cs" />
+    <Compile Include="UserInvalidException.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

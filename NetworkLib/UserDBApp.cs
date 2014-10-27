@@ -49,6 +49,27 @@ namespace NetworkLib
             cmd.ExecuteReader();
         }
 
+        public bool UserExists(string userName, string password)
+        {
+            String strSQL = "SELECT Password FROM [User] WHERE UserName = '" + userName + "';";
+
+            SqlCommand cmd = new SqlCommand(strSQL, _con);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    if (reader[i].ToString().Equals(password))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public void Close(){
             _con.Close();
         }

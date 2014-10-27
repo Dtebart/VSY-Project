@@ -38,10 +38,20 @@ namespace VSY_Server
 
         private void HandleMessage(Packet receipt)
         {
-            RequestHandler requestHandler = RequestHandler.GetHandler(receipt.Type);
-            Packet processedPacket = requestHandler.HandleRequest(receipt, _serverLink);
-            TcpClient receiver = _serverLink.ClientList[processedPacket.DestUser];
-            _serverLink.WriteMessage(processedPacket, receiver.GetStream());
+            try
+            {
+                RequestHandler requestHandler = RequestHandler.GetHandler(receipt.Type);
+                Packet processedPacket = requestHandler.HandleRequest(receipt, _serverLink);
+                TcpClient receiver = _serverLink.ClientList[processedPacket.DestUser];
+                _serverLink.WriteMessage(processedPacket, receiver.GetStream());
+            }
+            catch (InvalidUserException e)
+            {
+                // Send error Message back to Client
+                Packet errorResponse = new Packet(receipt.SrcUser, "ERROR", MessageTypes.Login);
+                _serverLink.WriteMessage(errorResponse, e._client.GetStream());
+                _serverLink.Client.Close();
+            }
         }
     }
 }

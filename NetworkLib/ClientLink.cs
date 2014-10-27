@@ -12,7 +12,7 @@ namespace NetworkLib
     public class ClientLink : Link
     {
         // ---------------------- Properties ----------------------
-        private IClient _iClient;
+        public IClient _iClient;
         private Thread _readThread;
 
         // ---------------------- Constructors ----------------------
@@ -63,8 +63,8 @@ namespace NetworkLib
 
         public void Close()
         {
-            // get rid of read thread
             _readThread.Abort();
+            _client.Close();
         }
 
         public static IPAddress GetLocalIP()

@@ -29,7 +29,7 @@ namespace VSY_Client
         public ClientLink _link;
         private String _receiver;
         private String _userName;
-        public delegate void ActionDel(String name);
+        public delegate void ResponseAction(String response);
         public MainWindow(String userName)
         {
             _receiver = "";            
@@ -55,7 +55,7 @@ namespace VSY_Client
                 List<String> friendlist = receipt.AdditionalArgs;
                 for (int i = 0; i < friendlist.Count; i++)
                 {
-                    ActionDel addFriend = addFriendEntry;
+                    ResponseAction addFriend = addFriendEntry;
                     Dispatcher.Invoke(addFriend, friendlist[i]);
                 }
             }

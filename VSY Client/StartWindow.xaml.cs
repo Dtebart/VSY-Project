@@ -19,8 +19,10 @@ namespace VSY_Client
     /// <summary>
     /// Interaktionslogik für Start.xaml
     /// </summary>
-    public partial class Start : Window
+    public partial class Start : Window, IClient
     {
+        public delegate void ResponseAction(String response);
+        private ClientLink _link;
         public Start()
         {
             InitializeComponent();
@@ -29,15 +31,13 @@ namespace VSY_Client
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             String userName = userNameTextBox.Text;
-            MainWindow chatWindow = new MainWindow(userName);
-            ClientLink link;
             try
             {
-                link = new ClientLink(chatWindow);
-                chatWindow._link = link;
+                _link = new ClientLink(this);
 
                 Packet loginRequest = new Packet(userName, userName, "Login-Try", MessageTypes.Login);
-                link.WriteMessage(loginRequest);
+                loginRequest.AddParam(passwordTextBox.Password);
+                _link.WriteMessage(loginRequest);
             }
             catch (ArgumentNullException excep)
             {
@@ -47,15 +47,39 @@ namespace VSY_Client
             {
                 Console.WriteLine("SocketException: {0}", excep);
             }
-
-            Close();
-            chatWindow.Show();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Window registrateWindow = new RegistrateWindow();
             registrateWindow.Show();
+        }
+
+        public void ActionAfterRead(Packet receipt)
+        {
+            if (receipt.Type == MessageTypes.Login)
+            {
+                ResponseAction login = OnFeedbackLogin;
+                Dispatcher.Invoke(login, receipt.Content);
+            }
+        }
+
+        private void OnFeedbackLogin(String feedback)
+        {
+            if (feedback == "OK\n")
+            {
+                MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
+                chatWindow._link = _link;
+                _link._iClient = chatWindow;
+
+                Close();
+                chatWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Login-Daten inkorrekt!");
+                _link.Close();
+            }
         }
     }
 }
