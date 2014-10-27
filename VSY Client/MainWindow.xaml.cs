@@ -29,11 +29,11 @@ namespace VSY_Client
         private String _receiver;
         private String _userName;
         public delegate void ActionDel(String name);
-        public MainWindow()
+        public MainWindow(String userName)
         {
             _receiver = "";            
             InitializeComponent();
-            _userName = ClientLink.GetLocalIP().ToString();
+            _userName = userName;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -61,7 +61,7 @@ namespace VSY_Client
         }
         private void FetchFriendlist()
         {
-            Packet friendlistRequest = new Packet(_userName, "178.201.225.83", "GetFriends", MessageTypes.GetFriendlist);
+            Packet friendlistRequest = new Packet(_userName, _userName, "GetFriends", MessageTypes.GetFriendlist);
             _link.WriteMessage(friendlistRequest);
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

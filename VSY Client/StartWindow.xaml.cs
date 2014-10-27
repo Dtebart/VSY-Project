@@ -28,12 +28,16 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow chatWindow = new MainWindow();
+            String userName = userNameTextBox.Text;
+            MainWindow chatWindow = new MainWindow(userName);
             ClientLink link;
             try
             {
                 link = new ClientLink(chatWindow);
                 chatWindow._link = link;
+
+                Packet loginRequest = new Packet(userName, userName, "Login-Try", MessageTypes.Login);
+                link.WriteMessage(loginRequest);
             }
             catch (ArgumentNullException excep)
             {

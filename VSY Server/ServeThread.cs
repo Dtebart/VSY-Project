@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetworkLib;
+using NetworkLib.RequestHandler;
 using System.Threading;
 
 namespace VSY_Server
@@ -46,7 +47,7 @@ namespace VSY_Server
         private void HandleMessage(Packet receipt)
         {
             RequestHandler requestHandler = RequestHandler.GetHandler(receipt.Type);
-            Packet processedPacket = requestHandler.HandleRequest(receipt);
+            Packet processedPacket = requestHandler.HandleRequest(receipt, _serverLink);
             TcpClient receiver = _serverLink.ClientList[processedPacket.DestUser];
             _serverLink.WriteMessage(processedPacket, receiver.GetStream());
         }

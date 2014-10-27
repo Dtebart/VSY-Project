@@ -28,7 +28,7 @@ namespace VSY_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow chatWindow = new MainWindow();
+            MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
             ClientLink link;
             try
             {
