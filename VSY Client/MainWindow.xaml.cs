@@ -62,7 +62,7 @@ namespace VSY_Client
             else if (receipt.Type == MessageTypes.AddFriend)
             {
                 ResponseAction addFriend = addFriendEntry;
-                Dispatcher.Invoke(addFriend, receipt.Content);
+                Dispatcher.Invoke(addFriend, receipt.Content.Replace("\n", ""));
             }
         }
         private void FetchFriendlist()
