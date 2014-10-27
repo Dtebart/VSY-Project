@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Win32;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;

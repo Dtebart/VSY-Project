@@ -23,7 +23,6 @@ namespace NetworkLib
       
         public Packet()
         {
-            //_destIp = IPAddress.Loopback;
             _content = String.Empty;
         }
 
@@ -40,14 +39,6 @@ namespace NetworkLib
             }
 
             _content = values[values.Length - 1];
-        }
-
-
-        public Packet(string destUser, string content)
-        {
-            _destUser = destUser;
-            _content = content;
-            _messageType = MessageTypes.TextMessage;
         }
 
         public Packet(string destUser, string content, MessageTypes messageType)

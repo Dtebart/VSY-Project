@@ -21,7 +21,8 @@ namespace NetworkLib
 
         public List<String> GetFriends(String userName)
         {
-            String strSQL = "SELECT Freund1, Freund2 FROM user_tbl WHERE UserName = '" + userName + "';";
+            String strSQL = "SELECT UserName1, UserName2 FROM User_User " +
+                            "WHERE UserName1 = '" + userName + "' OR UserName2 = '" + userName + "';";
             SqlCommand cmd = new SqlCommand(strSQL, _con);
 
             SqlDataReader reader = cmd.ExecuteReader();
@@ -31,7 +32,10 @@ namespace NetworkLib
             {
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    friends.Add(reader[i].ToString());
+                    string name = reader[i].ToString();
+                    if (name != userName){
+                        friends.Add(name);
+                    }
                 }
             }
 

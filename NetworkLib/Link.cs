@@ -39,15 +39,6 @@ namespace NetworkLib
             return receipt;
         }
 
-        public void WriteMessage(String message, string destUser)
-        {
-            if (message[message.Length - 1] != '\n')
-                message += '\n';
-            Packet packet = new Packet(destUser, message);
-            // Send the message to the connected TcpServer. 
-            _stream.Write(packet.Bytes, 0, packet.Bytes.Length);
-        }
-
         public void WriteMessage(Packet message)
         {
             if (message._content[message._content.Length - 1] != '\n')

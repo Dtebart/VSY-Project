@@ -18,8 +18,6 @@ namespace VSY_Server
 
         public ServeThread(ServerLink link){
             _serverLink = link;
-
-
             ThreadStart serveDel = new ThreadStart(serve);
             _thread = new Thread(serveDel);
         }
@@ -28,7 +26,7 @@ namespace VSY_Server
         {
             while (_serverLink.Open())
             {
-                Packet receipt = ReadMessage();
+                Packet receipt = _serverLink.ReadChannel();
                 HandleMessage(receipt);
             }
         }
@@ -36,12 +34,6 @@ namespace VSY_Server
         public void start()
         {
             _thread.Start();
-        }
-
-        private Packet ReadMessage()
-        {
-            Packet receipt = _serverLink.ReadChannel();
-            return receipt;
         }
 
         private void HandleMessage(Packet receipt)
