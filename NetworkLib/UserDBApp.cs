@@ -41,6 +41,14 @@ namespace NetworkLib
             return friends;
         }
 
+        public void InsertFriendship(string user1, string user2)
+        {
+            String strSQL = "INSERT INTO [User_User] VALUES('" + user1 + "', '" + user2 + "');";
+
+            SqlCommand cmd = new SqlCommand(strSQL, _con);
+            cmd.ExecuteReader();
+        }
+
         public void InsertUser(String name, String password)
         {
             String strSQL = "INSERT INTO [User] VALUES('" + name + "', '" + password + "');";

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientLink.cs" />
+    <Compile Include="RequestHandler\AddFriendHandler.cs" />
     <Compile Include="RequestHandler\FriendlistHandler.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="Link.cs" />

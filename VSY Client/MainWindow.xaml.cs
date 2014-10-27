@@ -59,6 +59,11 @@ namespace VSY_Client
                     Dispatcher.Invoke(addFriend, friendlist[i]);
                 }
             }
+            else if (receipt.Type == MessageTypes.AddFriend)
+            {
+                ResponseAction addFriend = addFriendEntry;
+                Dispatcher.Invoke(addFriend, receipt.Content);
+            }
         }
         private void FetchFriendlist()
         {
@@ -72,7 +77,8 @@ namespace VSY_Client
         }
         private void addFriendButton_Click(object sender, RoutedEventArgs e)
         {
-            addFriendEntry(addFriendTextBox.Text);
+            Packet addFriendRequest = new Packet(_userName, _userName, addFriendTextBox.Text, MessageTypes.AddFriend);
+            _link.WriteMessage(addFriendRequest);
             addFriendTextBox.Text = String.Empty;
         }
         private void addFriendEntry(String name)

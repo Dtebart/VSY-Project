@@ -25,6 +25,10 @@ namespace NetworkLib.RequestHandler
             {
                 return new RegistrateHandler();
             }
+            else if (type == MessageTypes.AddFriend)
+            {
+                return new AddFriendHandler();
+            }
 
             return null;
         }
