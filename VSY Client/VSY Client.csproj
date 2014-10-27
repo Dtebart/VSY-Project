@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChatHistory.cs" />
     <Compile Include="RegistrateWindow.xaml.cs">
       <DependentUpon>RegistrateWindow.xaml</DependentUpon>
     </Compile>

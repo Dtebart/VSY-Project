@@ -29,27 +29,39 @@ namespace VSY_Client
         public ClientLink _link;
         private String _receiver;
         private String _userName;
+        private ChatHistory _chatHistory;
         public delegate void ResponseAction(String response);
         public MainWindow(String userName)
         {
             _receiver = "";            
             InitializeComponent();
             _userName = userName;
+            _chatHistory = new ChatHistory();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (messageBox.Text != "" && _receiver != "")
             {
-                receivedMessageBox.Text += "Ich: " + messageBox.Text + "\n";
+                if (!_chatHistory.UserExist(_receiver))
+                    _chatHistory.AddUser(_receiver);
                 Packet messageRequest = new Packet(_userName, _receiver, messageBox.Text, MessageTypes.TextMessage);
                 _link.WriteMessage(messageRequest);
+                _chatHistory.AddTexttoUser("Ich: " + messageRequest.Content, messageRequest.DestUser);
+                receivedMessageBox.Text = _chatHistory.GetText(messageRequest.DestUser);
                 messageBox.Text = "";
             }
         }
         public void ActionAfterRead(Packet receipt)
         {
             if (receipt.Type == MessageTypes.TextMessage)
-                Dispatcher.BeginInvoke(new Action(() => receivedMessageBox.Text += receipt.SrcUser + ": " + receipt.Content));
+            {
+                if (!_chatHistory.UserExist(receipt.SrcUser))
+                    _chatHistory.AddUser(receipt.SrcUser);
+                _chatHistory.AddTexttoUser(receipt.SrcUser + ": " + receipt.Content, receipt.SrcUser);
+                ResponseAction updateMessageBox = UpdateRecievedMessages;
+                Dispatcher.Invoke(updateMessageBox, receipt.SrcUser);
+
+            }
             else if (receipt.Type == MessageTypes.GetFriendlist)
             {
                 List<String> friendlist = receipt.AdditionalArgs;
@@ -57,6 +69,7 @@ namespace VSY_Client
                 {
                     ResponseAction addFriend = addFriendEntry;
                     Dispatcher.Invoke(addFriend, friendlist[i]);
+                    
                 }
             }
             else if (receipt.Type == MessageTypes.AddFriend)
@@ -65,6 +78,12 @@ namespace VSY_Client
                 Dispatcher.Invoke(addFriend, receipt.Content.Replace("\n", ""));
             }
         }
+
+        public void UpdateRecievedMessages(string user)
+        {
+            receivedMessageBox.Text = _chatHistory.GetText(user);
+        }
+
         private void FetchFriendlist()
         {
             Packet friendlistRequest = new Packet(_userName, _userName, "GetFriends", MessageTypes.GetFriendlist);
@@ -87,6 +106,7 @@ namespace VSY_Client
             newFriend.Content = name;
             newFriend.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(friendListItem_MouseDown), true);
             friendsListBox.Items.Add(newFriend);
+            _chatHistory.AddUser(name);
         }
         private void friendListItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -96,6 +116,9 @@ namespace VSY_Client
             int buttonTextPlaceEnd = sendButton.Content.ToString().LastIndexOf("-");
             String oldReceiver = sendButton.Content.ToString().Substring(buttonTextPlaceStart + 1, buttonTextPlaceEnd - buttonTextPlaceStart - 1);
             sendButton.Content = sendButton.Content.ToString().Replace(oldReceiver, _receiver);
+            if (!_chatHistory.UserExist(_receiver))
+                _chatHistory.AddUser(_receiver);
+            receivedMessageBox.Text = _chatHistory.GetText(_receiver);
         }
         private void friendsListBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
