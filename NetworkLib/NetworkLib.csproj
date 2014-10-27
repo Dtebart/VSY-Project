@@ -55,14 +55,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientLink.cs" />
-    <Compile Include="Requests\FriendlistHandler.cs" />
+    <Compile Include="RequestHandler\FriendlistHandler.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="Link.cs" />
-    <Compile Include="Requests\LoginHandler.cs" />
-    <Compile Include="Requests\MessageRequestHandler.cs" />
+    <Compile Include="RequestHandler\LoginHandler.cs" />
+    <Compile Include="RequestHandler\MessageRequestHandler.cs" />
     <Compile Include="Paket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\RequestHandler.cs" />
+    <Compile Include="RequestHandler\RegistrateHandler.cs" />
+    <Compile Include="RequestHandler\RequestHandler.cs" />
     <Compile Include="ServerLink.cs" />
     <Compile Include="UserDBApp.cs" />
   </ItemGroup>

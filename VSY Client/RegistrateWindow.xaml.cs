@@ -34,6 +34,9 @@ namespace VSY_Client
             {
                 link = new ClientLink(chatWindow);
                 chatWindow._link = link;
+                Packet registrateRequest = new Packet(userNameTextBox.Text, userNameTextBox.Text, "Registration", MessageTypes.Registrate);
+                registrateRequest.AddParam(passwordTextBox.Password);
+                link.WriteMessage(registrateRequest);
             }
             catch (ArgumentNullException excep)
             {
