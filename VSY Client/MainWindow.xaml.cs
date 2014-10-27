@@ -40,15 +40,15 @@ namespace VSY_Client
             if (messageBox.Text != "" && _receiver != "")
             {
                 receivedMessageBox.Text += "Ich: " + messageBox.Text + "\n";
-                Packet textMessage = new Packet(_userName, _receiver, messageBox.Text, MessageTypes.TextMessage);
-                _link.WriteMessage(textMessage);
+                Packet messageRequest = new Packet(_userName, _receiver, messageBox.Text, MessageTypes.TextMessage);
+                _link.WriteMessage(messageRequest);
                 messageBox.Text = "";
             }
         }
         public void ActionAfterRead(Packet receipt)
         {
             if (receipt.Type == MessageTypes.TextMessage)
-                Dispatcher.BeginInvoke(new Action(() => receivedMessageBox.Text += receipt.Content));
+                Dispatcher.BeginInvoke(new Action(() => receivedMessageBox.Text += receipt.SrcUser + ": " + receipt.Content));
             else if (receipt.Type == MessageTypes.GetFriendlist)
             {
                 List<String> friendlist = receipt.AdditionalArgs;
