@@ -106,7 +106,8 @@ namespace VSY_Client
             newFriend.Content = name;
             newFriend.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(friendListItem_MouseDown), true);
             friendsListBox.Items.Add(newFriend);
-            _chatHistory.AddUser(name);
+            if (!_chatHistory.UserExist(name))
+                _chatHistory.AddUser(name);
         }
         private void friendListItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
