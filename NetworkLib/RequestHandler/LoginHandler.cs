@@ -19,6 +19,7 @@ namespace NetworkLib.RequestHandler
             {
                 feedback = "OK";
                 ServerLink.AddClient(request.SrcUser, serverLink.Client);
+                serverLink._clientName = userName;
             }
             else
             {

@@ -51,7 +51,7 @@ namespace NetworkLib
 
         public void InsertUser(String name, String password)
         {
-            String strSQL = "INSERT INTO [User] VALUES('" + name + "', '" + password + "');";
+            String strSQL = "INSERT INTO [User] VALUES('" + name + "', '" + password + "'" + ", '0'" + ");";
 
             SqlCommand cmd = new SqlCommand(strSQL, _con);
             cmd.ExecuteReader();

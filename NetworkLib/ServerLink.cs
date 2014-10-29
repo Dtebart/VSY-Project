@@ -15,6 +15,8 @@ namespace NetworkLib
         // ---------------------- Properties ----------------------
         private TcpListener _serverSocket;
         private static Dictionary<string, TcpClient> _clientList;
+
+        public string _clientName = String.Empty;
         // ---------------------- Constructors ----------------------
         public ServerLink()
         {
@@ -70,6 +72,13 @@ namespace NetworkLib
         {
             Monitor.Enter(_clientList);
                 _clientList.Add(clientName, client);
+            Monitor.Exit(_clientList);
+        }
+
+        public static void RemoveClient(String clientName)
+        {
+            Monitor.Enter(_clientList);
+                _clientList.Remove(clientName);
             Monitor.Exit(_clientList);
         }
 

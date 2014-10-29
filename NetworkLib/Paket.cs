@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NetworkLib
 {
-    public enum MessageTypes { TextMessage, Login, Registrate, GetFriendlist, AddFriend };
+    public enum MessageTypes { TextMessage, Login, Registrate, GetFriendlist, AddFriend};
     public class Packet
     {
         // ---------------------- Properties ----------------------
