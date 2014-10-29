@@ -95,7 +95,7 @@ namespace NetworkLib
         {
             get {
                 String messageText = ((int)_messageType).ToString() + _splitToken + _destUser + _splitToken + _srcUser + _splitToken + AdditionalArgsText + _content;
-                return System.Text.Encoding.ASCII.GetBytes(messageText); 
+                return System.Text.Encoding.BigEndianUnicode.GetBytes(messageText); 
             }
         }
 

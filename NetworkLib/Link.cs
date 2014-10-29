@@ -30,7 +30,7 @@ namespace NetworkLib
             {
                 i = _stream.Read(dataBuffer, 0, dataBuffer.Length);
                 // Translate data bytes to a ASCII string.
-                message += System.Text.Encoding.ASCII.GetString(dataBuffer, 0, i);
+                message += System.Text.Encoding.BigEndianUnicode.GetString(dataBuffer, 0, i);
 
             } while (message[message.Length - 1] != '\n');
 
