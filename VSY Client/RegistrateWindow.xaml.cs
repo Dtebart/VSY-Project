@@ -38,6 +38,8 @@ namespace VSY_Client
                 registrateRequest.AddParam(passwordTextBox.Password);
                 _link.WriteMessage(registrateRequest);
 
+                chatWindow._link = _link;
+
                 Window mainWindow = App.Current.MainWindow;
 
                 mainWindow.Close();
