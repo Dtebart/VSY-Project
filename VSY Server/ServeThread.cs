@@ -68,6 +68,9 @@ namespace VSY_Server
             closingClient.Close();
             ServerLink.RemoveClient(userName);
             Console.WriteLine("Closed Connection to Client: {0}\n", userName);
+
+            UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
+            dbApp.ChangeOnlinestatus(userName, false);
         }
     }
 }

@@ -38,6 +38,7 @@ namespace NetworkLib
                     }
                 }
             }
+            reader.Close();
             return friends;
         }
 
@@ -57,6 +58,14 @@ namespace NetworkLib
             cmd.ExecuteReader();
         }
 
+        public void ChangeOnlinestatus(string userName, bool isOnline)
+        {
+            String strSQL = "UPDATE [User] SET isOnline = '" + Convert.ToInt32(isOnline) + "' WHERE UserName = '" + userName + "';";
+
+            SqlCommand cmd = new SqlCommand(strSQL, _con);
+            cmd.ExecuteReader();
+        }
+
         public bool UserExists(string userName, string password)
         {
             String strSQL = "SELECT Password FROM [User] WHERE UserName = '" + userName + "';";
@@ -70,11 +79,13 @@ namespace NetworkLib
                 {
                     if (reader[i].ToString().Equals(password))
                     {
+                        reader.Close();
                         return true;
                     }
                 }
             }
 
+            reader.Close();
             return false;
         }
 
