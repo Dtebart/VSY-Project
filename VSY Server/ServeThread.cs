@@ -26,8 +26,15 @@ namespace VSY_Server
         {
             while (_serverLink.Open())
             {
-                Packet receipt = _serverLink.ReadChannel();
-                HandleMessage(receipt);
+                try
+                {
+                    Packet receipt = _serverLink.ReadChannel();
+                    HandleMessage(receipt);
+                }
+                catch (IndexOutOfRangeException e)
+                {
+                    LogoutUser(_serverLink._clientName);
+                }
             }
         }
 
@@ -52,6 +59,15 @@ namespace VSY_Server
                 _serverLink.WriteMessage(errorResponse, e._client.GetStream());
                 _serverLink.Client.Close();
             }
+        }
+
+        private void LogoutUser(string userName)
+        {
+            TcpClient closingClient = _serverLink.ClientList[userName];
+
+            closingClient.Close();
+            ServerLink.RemoveClient(userName);
+            Console.WriteLine("Closed Connection to Client: {0}\n", userName);
         }
     }
 }
