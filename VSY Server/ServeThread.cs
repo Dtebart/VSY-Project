@@ -54,7 +54,7 @@ namespace VSY_Server
             }
             catch (InvalidUserException e)
             {
-                // Send error Message back to Client
+                // Send error message back to Client
                 Packet errorResponse = new Packet(receipt.SrcUser, "ERROR", MessageTypes.Login);
                 _serverLink.WriteMessage(errorResponse, e._client.GetStream());
                 _serverLink.Client.Close();
@@ -71,6 +71,8 @@ namespace VSY_Server
 
             UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
             dbApp.ChangeOnlinestatus(userName, false);
+
+            _thread.Abort();
         }
     }
 }
