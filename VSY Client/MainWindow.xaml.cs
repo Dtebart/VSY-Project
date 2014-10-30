@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Media;
 
 using NetworkLib;
 
@@ -30,6 +31,7 @@ namespace VSY_Client
         private String _receiver;
         private String _userName;
         private ChatHistory _chatHistory;
+        private SoundPlayer _recievedMessageInformation;
         public delegate void ResponseAction(String response);
         public MainWindow(String userName)
         {
@@ -37,6 +39,8 @@ namespace VSY_Client
             InitializeComponent();
             _userName = userName;
             _chatHistory = new ChatHistory();
+            _recievedMessageInformation = new SoundPlayer(Properties.Resources.gotMessage);
+            
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -60,6 +64,7 @@ namespace VSY_Client
                 _chatHistory.AddTexttoUser(receipt.SrcUser + ": " + receipt.Content, receipt.SrcUser);
                 ResponseAction updateMessageBox = UpdateRecievedMessages;
                 Dispatcher.Invoke(updateMessageBox, receipt.SrcUser);
+                
 
             }
             else if (receipt.Type == MessageTypes.GetFriendlist)
@@ -82,6 +87,7 @@ namespace VSY_Client
         public void UpdateRecievedMessages(string user)
         {
             receivedMessageBox.Text = _chatHistory.GetText(user);
+            _recievedMessageInformation.Play();
         }
 
         private void FetchFriendlist()

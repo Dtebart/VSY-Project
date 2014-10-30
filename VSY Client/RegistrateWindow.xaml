@@ -8,7 +8,7 @@
         <Label Content="Passwort;" HorizontalAlignment="Left" Margin="29,104,0,0" VerticalAlignment="Top" Width="230"/>
         <Label Content="Benutzername:" HorizontalAlignment="Left" Margin="29,36,0,0" VerticalAlignment="Top" Width="230"/>
         <Label Content="Passwort wiederholen:" HorizontalAlignment="Left" Margin="29,168,0,0" VerticalAlignment="Top" Width="230"/>
-        <PasswordBox HorizontalAlignment="Left" Margin="29,194,0,0" VerticalAlignment="Top" Width="230"/>
+        <PasswordBox x:Name="passwordConfirmTextBox" HorizontalAlignment="Left" Margin="29,194,0,0" VerticalAlignment="Top" Width="230"/>
         <Button Content="Registrierung bestätigen" HorizontalAlignment="Left" Margin="29,250,0,0" VerticalAlignment="Top" Width="230" Height="39" Click="Button_Click"/>
 
     </Grid>

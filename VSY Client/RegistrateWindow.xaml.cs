@@ -32,19 +32,26 @@ namespace VSY_Client
         {
             try
             {
-                MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
-                _link = new ClientLink(chatWindow);
-                Packet registrateRequest = new Packet(userNameTextBox.Text, userNameTextBox.Text, "Registration", MessageTypes.Registrate);
-                registrateRequest.AddParam(passwordTextBox.Password);
-                _link.WriteMessage(registrateRequest);
 
-                chatWindow._link = _link;
-
-                Window mainWindow = App.Current.MainWindow;
-
-                mainWindow.Close();
-                Close();
-                chatWindow.Show();
+                if (passwordTextBox.Password != "" && passwordTextBox.Password == passwordConfirmTextBox.Password)
+                {
+                    MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
+                    _link = new ClientLink(chatWindow);
+                    Packet registrateRequest = new Packet(userNameTextBox.Text, userNameTextBox.Text, "Registration", MessageTypes.Registrate);
+                    registrateRequest.AddParam(passwordTextBox.Password);
+                    _link.WriteMessage(registrateRequest);
+                    chatWindow._link = _link;
+                    Window mainWindow = App.Current.MainWindow;
+                    mainWindow.Close();
+                    Close();
+                    chatWindow.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Passwörter stimmen nicht überein!");
+                    passwordTextBox.Password = "";
+                    passwordConfirmTextBox.Password = "";
+                }
             }
             catch (ArgumentNullException excep)
             {
@@ -53,6 +60,7 @@ namespace VSY_Client
             catch (SocketException excep)
             {
                 Console.WriteLine("SocketException: {0}", excep);
+                MessageBox.Show("Keine Antwort vom Server. Bitte versuchen sie es Später erneut.");
             }
         }
     }
