@@ -33,6 +33,6 @@ namespace NetworkLib.RequestHandler
             return null;
         }
 
-        public abstract Packet HandleRequest(Packet request, ServerLink serverLink);
+        public abstract Packet[] HandleRequest(Packet request, ServerLink serverLink);
     }
 }

@@ -8,7 +8,7 @@ namespace NetworkLib.RequestHandler
 {
     public class RegistrateHandler : RequestHandler
     {
-        public override Packet HandleRequest(Packet request, ServerLink serverLink)
+        public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
             String user = request.SrcUser;
             String password = request.AdditionalArgs[0];
@@ -17,7 +17,12 @@ namespace NetworkLib.RequestHandler
             dbApp.InsertUser(user, password);
 
             ServerLink.AddClient(request.SrcUser, serverLink.Client);
-            return request;
+
+            Packet[] response = new Packet[1];
+
+            response[0] = request;
+
+            return response;
         }
     }
 }

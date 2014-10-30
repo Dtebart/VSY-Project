@@ -8,9 +8,13 @@ namespace NetworkLib.RequestHandler
 {
     public class MessageRequestHandler : RequestHandler
     {
-        public override Packet HandleRequest(Packet request, ServerLink serverLink)
+        public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
-            return request;
+            Packet[] response = new Packet[1];
+
+            response[0] = request;
+
+            return response;
         }
     }
 }

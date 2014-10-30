@@ -9,7 +9,7 @@ namespace NetworkLib.RequestHandler
 {
     public class LoginHandler : RequestHandler
     {
-        public override Packet HandleRequest(Packet request, ServerLink serverLink)
+        public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
             string feedback;
             UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
@@ -26,7 +26,11 @@ namespace NetworkLib.RequestHandler
             {
                 throw new InvalidUserException(serverLink.Client);
             }
-            Packet response = new Packet(request.SrcUser, feedback, MessageTypes.Login);
+            Packet loginFeedback = new Packet(request.SrcUser, feedback, MessageTypes.Login);
+
+            Packet[] response = new Packet[1];
+
+            response[0] = loginFeedback;
 
             return response;
         }

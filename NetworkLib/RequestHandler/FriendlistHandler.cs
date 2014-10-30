@@ -9,7 +9,7 @@ namespace NetworkLib.RequestHandler
 {
     public class FriendlistHandler : RequestHandler
     {
-        public override Packet HandleRequest(Packet request, ServerLink serverLink)
+        public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
             UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
             List<String> friendList = dbApp.GetFriends(request.DestUser);
@@ -18,7 +18,12 @@ namespace NetworkLib.RequestHandler
             for (int i = 0; i < friendList.Count; i++){
                 request.AddParam(friendList[i]);
             }
-            return request;
+
+            Packet[] response = new Packet[1];
+
+            response[0] = request;
+
+            return response;
         }
     }
 }
