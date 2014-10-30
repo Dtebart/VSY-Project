@@ -58,7 +58,7 @@ namespace VSY_Server
             catch (InvalidUserException e)
             {
                 // Send error message back to Client
-                Packet errorResponse = new Packet(receipt.SrcUser, "ERROR", MessageTypes.Login);
+                Packet errorResponse = new Packet(receipt.SrcUser, "ERROR", receipt.Type);
                 _serverLink.WriteMessage(errorResponse, e._client.GetStream());
                 _serverLink.Client.Close();
             }

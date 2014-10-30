@@ -19,10 +19,10 @@ namespace VSY_Client
     /// <summary>
     /// Interaktionslogik für RegistrateWindow.xaml
     /// </summary>
-    public partial class RegistrateWindow : Window
+    public partial class RegistrateWindow : Window, IClient
     {
-        public delegate void ResponseAction(String response);
         private ClientLink _link;
+        public delegate void ResponseAction(String response);
         public RegistrateWindow()
         {
             InitializeComponent();
@@ -35,16 +35,10 @@ namespace VSY_Client
 
                 if (passwordTextBox.Password != "" && passwordTextBox.Password == passwordConfirmTextBox.Password)
                 {
-                    MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
-                    _link = new ClientLink(chatWindow);
+                    _link = new ClientLink(this);
                     Packet registrateRequest = new Packet(userNameTextBox.Text, userNameTextBox.Text, "Registration", MessageTypes.Registrate);
                     registrateRequest.AddParam(passwordTextBox.Password);
                     _link.WriteMessage(registrateRequest);
-                    chatWindow._link = _link;
-                    Window mainWindow = App.Current.MainWindow;
-                    mainWindow.Close();
-                    Close();
-                    chatWindow.Show();
                 }
                 else
                 {
@@ -61,6 +55,31 @@ namespace VSY_Client
             {
                 Console.WriteLine("SocketException: {0}", excep);
                 MessageBox.Show("Keine Antwort vom Server. Bitte versuchen sie es Später erneut.");
+            }
+        }
+
+        public void ActionAfterRead(Packet receipt)
+        {
+            ResponseAction reg = Registrate;
+            Dispatcher.Invoke(reg, receipt.Content);
+        }
+
+        private void Registrate(String response)
+        {
+            if (!response.Equals("ERROR\n"))
+            {
+                MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
+                _link._iClient = chatWindow;
+                chatWindow._link = _link;
+                Window mainWindow = App.Current.MainWindow;
+                mainWindow.Close();
+                Close();
+                chatWindow.Show();
+            }
+            else
+            {
+                _link.Close();
+                MessageBox.Show("Der Name ist bereits vergeben.");
             }
         }
     }

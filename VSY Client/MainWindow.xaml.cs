@@ -40,7 +40,6 @@ namespace VSY_Client
             _userName = userName;
             _chatHistory = new ChatHistory();
             _recievedMessageInformation = new SoundPlayer(Properties.Resources.gotMessage);
-            
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -78,8 +77,15 @@ namespace VSY_Client
             }
             else if (receipt.Type == MessageTypes.AddFriend)
             {
-                ResponseAction addFriend = AddFriendEntry;
-                Dispatcher.Invoke(addFriend, receipt.Content.Replace("\n", "") + "," + receipt.AdditionalArgs[0]);
+                if (!receipt.Content.Equals("ERROR\n"))
+                {
+                    ResponseAction addFriend = AddFriendEntry;
+                    Dispatcher.Invoke(addFriend, receipt.Content.Replace("\n", "") + "," + receipt.AdditionalArgs[0]);
+                }
+                else
+                {
+                    Dispatcher.BeginInvoke(new Action(() => MessageBox.Show("Name konnte nicht gefunden werden.")));
+                }
             }
             else if (receipt.Type == MessageTypes.FriendOnline)
             {
@@ -130,9 +136,12 @@ namespace VSY_Client
         }
         private void addFriendButton_Click(object sender, RoutedEventArgs e)
         {
-            Packet addFriendRequest = new Packet(_userName, _userName, addFriendTextBox.Text, MessageTypes.AddFriend);
-            _link.WriteMessage(addFriendRequest);
-            addFriendTextBox.Text = String.Empty;
+            if (addFriendTextBox.Text != String.Empty)
+            {
+                Packet addFriendRequest = new Packet(_userName, _userName, addFriendTextBox.Text, MessageTypes.AddFriend);
+                _link.WriteMessage(addFriendRequest);
+                addFriendTextBox.Text = String.Empty;
+            }
         }
         private void AddFriendEntry(string userInfo)
         {

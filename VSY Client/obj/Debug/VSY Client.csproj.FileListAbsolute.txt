@@ -37,3 +37,4 @@ C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\b
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.exe
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client.pdb
 C:\Users\Schmax\DerInstantMessenger\VSY Client\obj\Debug\VSY Client_Content.g.cs
+C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Client\obj\Debug\VSY Client_Content.g.cs
