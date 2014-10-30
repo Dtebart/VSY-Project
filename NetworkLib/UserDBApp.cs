@@ -40,6 +40,25 @@ namespace NetworkLib
             return friends;
         }
 
+        public List<String> GetOnlineFriends(string userName)
+        {
+            List<String> onlineFriends = new List<String>();
+            String strSQL = "SELECT Friend FROM [User] " +
+                            "INNER JOIN [User_User] ON Friend = UserName WHERE [User] = '" + userName + 
+                            "' AND isOnline = '1';";
+            SqlCommand cmd = new SqlCommand(strSQL, _con);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                onlineFriends.Add(reader["Friend"].ToString());
+            }
+
+            reader.Close();
+
+            return onlineFriends;
+        }
+
         public void InsertFriendship(string user, string friend)
         {
             String strSQL = "INSERT INTO [User_User] VALUES('" + user + "', '" + friend + "');";
@@ -65,7 +84,9 @@ namespace NetworkLib
             String strSQL = "UPDATE [User] SET isOnline = '" + Convert.ToInt32(isOnline) + "' WHERE UserName = '" + userName + "';";
 
             SqlCommand cmd = new SqlCommand(strSQL, _con);
-            cmd.ExecuteReader();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            reader.Close();
         }
 
         public bool UserIsOnline(string userName)

@@ -75,6 +75,14 @@ namespace VSY_Server
             UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
             dbApp.ChangeOnlinestatus(userName, false);
 
+            List<String> onlineFriends = dbApp.GetOnlineFriends(userName);
+            foreach (String friend in onlineFriends)
+            {
+                TcpClient receiver = _serverLink.ClientList[friend];
+                Packet offlineNote = new Packet(userName, friend, "IsOffline", MessageTypes.FriendOffline);
+                _serverLink.WriteMessage(offlineNote, receiver.GetStream());
+            }
+
             _thread.Abort();
         }
     }
