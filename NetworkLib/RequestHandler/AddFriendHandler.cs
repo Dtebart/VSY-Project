@@ -12,7 +12,9 @@ namespace NetworkLib.RequestHandler
         {
             UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
 
-            dbApp.InsertFriendship(request.SrcUser, request.Content.Replace("\n", ""));
+            String newFriend = request.Content.Replace("\n", "");
+            dbApp.InsertFriendship(request.SrcUser, newFriend);
+            request.AddParam(dbApp.UserIsOnline(newFriend).ToString());
 
             return request;
         }

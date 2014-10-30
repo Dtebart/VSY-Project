@@ -65,17 +65,16 @@ namespace VSY_Client
             else if (receipt.Type == MessageTypes.GetFriendlist)
             {
                 List<String> friendlist = receipt.AdditionalArgs;
-                for (int i = 0; i < friendlist.Count; i++)
+                for (int i = 0; i < friendlist.Count; i += 2)
                 {
                     ResponseAction addFriend = addFriendEntry;
-                    Dispatcher.Invoke(addFriend, friendlist[i]);
-                    
+                    Dispatcher.Invoke(addFriend, friendlist[i] + "," + friendlist[i+1]);
                 }
             }
             else if (receipt.Type == MessageTypes.AddFriend)
             {
                 ResponseAction addFriend = addFriendEntry;
-                Dispatcher.Invoke(addFriend, receipt.Content.Replace("\n", ""));
+                Dispatcher.Invoke(addFriend, receipt.Content.Replace("\n", "") + "," + receipt.AdditionalArgs[0]);
             }
         }
 
@@ -100,10 +99,18 @@ namespace VSY_Client
             _link.WriteMessage(addFriendRequest);
             addFriendTextBox.Text = String.Empty;
         }
-        private void addFriendEntry(String name)
+        private void addFriendEntry(String userInfo)
         {
+            String[] userInf = userInfo.Split(',');
+            String name = userInf[0];
+            Boolean isOnline = Convert.ToBoolean(userInf[1]);
+
             ListBoxItem newFriend = new ListBoxItem();
             newFriend.Content = name;
+            if (isOnline)
+                newFriend.Background = Brushes.Green;
+            else
+                newFriend.Background = Brushes.Red;
             newFriend.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(friendListItem_MouseDown), true);
             friendsListBox.Items.Add(newFriend);
             if (!_chatHistory.UserExist(name))

@@ -21,8 +21,8 @@ namespace NetworkLib
 
         public List<String> GetFriends(String userName)
         {
-            String strSQL = "SELECT UserName1, UserName2 FROM User_User " +
-                            "WHERE UserName1 = '" + userName + "' OR UserName2 = '" + userName + "';";
+            String strSQL = "SELECT Friend, isOnline FROM [User] " +
+                            "INNER JOIN [User_User] ON Friend = UserName WHERE [User] = '" + userName + "';";
             SqlCommand cmd = new SqlCommand(strSQL, _con);
 
             SqlDataReader reader = cmd.ExecuteReader();
@@ -30,24 +30,24 @@ namespace NetworkLib
             List<String> friends = new List<String>();
             while (reader.Read())
             {
-                for (int i = 0; i < reader.FieldCount; i++)
-                {
-                    string name = reader[i].ToString();
-                    if (name != userName){
-                        friends.Add(name);
-                    }
-                }
+                String friend = reader["Friend"].ToString();
+                String onlineStatus = reader["isOnline"].ToString();
+
+                friends.Add(friend);
+                friends.Add(onlineStatus);
             }
             reader.Close();
             return friends;
         }
 
-        public void InsertFriendship(string user1, string user2)
+        public void InsertFriendship(string user, string friend)
         {
-            String strSQL = "INSERT INTO [User_User] VALUES('" + user1 + "', '" + user2 + "');";
+            String strSQL = "INSERT INTO [User_User] VALUES('" + user + "', '" + friend + "');";
 
             SqlCommand cmd = new SqlCommand(strSQL, _con);
-            cmd.ExecuteReader();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            reader.Close();
         }
 
         public void InsertUser(String name, String password)
@@ -55,7 +55,9 @@ namespace NetworkLib
             String strSQL = "INSERT INTO [User] VALUES('" + name + "', '" + password + "'" + ", '0'" + ");";
 
             SqlCommand cmd = new SqlCommand(strSQL, _con);
-            cmd.ExecuteReader();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            reader.Close();
         }
 
         public void ChangeOnlinestatus(string userName, bool isOnline)
@@ -64,6 +66,21 @@ namespace NetworkLib
 
             SqlCommand cmd = new SqlCommand(strSQL, _con);
             cmd.ExecuteReader();
+        }
+
+        public bool UserIsOnline(string userName)
+        {
+            String strSQL = "SELECT isOnline FROM [User] WHERE UserName = '" + userName + "';";
+
+            SqlCommand cmd = new SqlCommand(strSQL, _con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+
+            bool isOnline = Convert.ToBoolean(reader["isOnline"].ToString());
+
+            reader.Close();
+
+            return isOnline;
         }
 
         public bool UserExists(string userName, string password)
@@ -84,7 +101,6 @@ namespace NetworkLib
                     }
                 }
             }
-
             reader.Close();
             return false;
         }
