@@ -28,9 +28,15 @@ namespace NetworkLib.RequestHandler
             }
             Packet loginFeedback = new Packet(request.SrcUser, feedback, MessageTypes.Login);
 
-            Packet[] response = new Packet[1];
+            List<String> friendsOfRequester = dbApp.GetOnlineFriends(userName);
 
+            Packet[] response = new Packet[friendsOfRequester.Count + 1];
             response[0] = loginFeedback;
+
+            for (int i = 1; i < response.Length; i++)
+            {
+                response[i] = new Packet(request.SrcUser, friendsOfRequester[i - 1], "NowOnline", MessageTypes.FriendOnline);
+            }
 
             return response;
         }

@@ -72,14 +72,24 @@ namespace VSY_Client
                 List<String> friendlist = receipt.AdditionalArgs;
                 for (int i = 0; i < friendlist.Count; i += 2)
                 {
-                    ResponseAction addFriend = addFriendEntry;
+                    ResponseAction addFriend = AddFriendEntry;
                     Dispatcher.Invoke(addFriend, friendlist[i] + "," + friendlist[i+1]);
                 }
             }
             else if (receipt.Type == MessageTypes.AddFriend)
             {
-                ResponseAction addFriend = addFriendEntry;
+                ResponseAction addFriend = AddFriendEntry;
                 Dispatcher.Invoke(addFriend, receipt.Content.Replace("\n", "") + "," + receipt.AdditionalArgs[0]);
+            }
+            else if (receipt.Type == MessageTypes.FriendOnline)
+            {
+                ResponseAction changeOnlineStatus = ChangeOnlineStatus;
+                Dispatcher.Invoke(changeOnlineStatus, receipt.SrcUser + "," + "True");
+            }
+            else if (receipt.Type == MessageTypes.FriendOffline)
+            {
+                ResponseAction changeOnlineStatus = ChangeOnlineStatus;
+                Dispatcher.Invoke(changeOnlineStatus, receipt.SrcUser + "," + "False");
             }
         }
 
@@ -87,6 +97,25 @@ namespace VSY_Client
         {
             receivedMessageBox.Text = _chatHistory.GetText(user);
             _recievedMessageInformation.Play();
+        }
+
+        private void ChangeOnlineStatus(string userInfo)
+        {
+            string[] userInf = userInfo.Split(',');
+            foreach (ListBoxItem friend in friendsListBox.Items)
+            {
+                if (friend.Content.Equals(userInf[0]))
+                {
+                    if (Convert.ToBoolean(userInf[1]))
+                    {
+                        friend.Background = Brushes.Green;
+                    }
+                    else
+                    {
+                        friend.Background = Brushes.Red;
+                    }
+                }
+            }
         }
 
         private void FetchFriendlist()
@@ -105,20 +134,26 @@ namespace VSY_Client
             _link.WriteMessage(addFriendRequest);
             addFriendTextBox.Text = String.Empty;
         }
-        private void addFriendEntry(String userInfo)
+        private void AddFriendEntry(string userInfo)
         {
             String[] userInf = userInfo.Split(',');
             String name = userInf[0];
             Boolean isOnline = Convert.ToBoolean(userInf[1]);
 
             ListBoxItem newFriend = new ListBoxItem();
-            newFriend.Content = name;
+
             if (isOnline)
+            {
                 newFriend.Background = Brushes.Green;
+            }
             else
+            {
                 newFriend.Background = Brushes.Red;
+            }
+            newFriend.Content = name;
             newFriend.AddHandler(UIElement.MouseDownEvent, new MouseButtonEventHandler(friendListItem_MouseDown), true);
             friendsListBox.Items.Add(newFriend);
+            
             if (!_chatHistory.UserExist(name))
                 _chatHistory.AddUser(name);
         }
