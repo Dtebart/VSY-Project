@@ -8,7 +8,7 @@ namespace NetworkLib.RequestHandler
 {
     public class AddFriendHandler : RequestHandler
     {
-        public override Packet HandleRequest(Packet request, ServerLink serverLink)
+        public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
             UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
 
@@ -16,7 +16,11 @@ namespace NetworkLib.RequestHandler
             dbApp.InsertFriendship(request.SrcUser, newFriend);
             request.AddParam(dbApp.UserIsOnline(newFriend).ToString());
 
-            return request;
+            Packet[] response = new Packet[1];
+
+            response[0] = request;
+
+            return response;
         }
     }
 }

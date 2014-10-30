@@ -48,9 +48,12 @@ namespace VSY_Server
             try
             {
                 RequestHandler requestHandler = RequestHandler.GetHandler(receipt.Type);
-                Packet processedPacket = requestHandler.HandleRequest(receipt, _serverLink);
-                TcpClient receiver = _serverLink.ClientList[processedPacket.DestUser];
-                _serverLink.WriteMessage(processedPacket, receiver.GetStream());
+                Packet[] responsePackets = requestHandler.HandleRequest(receipt, _serverLink);
+                foreach (Packet packet in responsePackets)
+                {
+                    TcpClient receiver = _serverLink.ClientList[packet.DestUser];
+                    _serverLink.WriteMessage(packet, receiver.GetStream());
+                }
             }
             catch (InvalidUserException e)
             {
