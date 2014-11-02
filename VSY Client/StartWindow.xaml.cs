@@ -68,7 +68,7 @@ namespace VSY_Client
         {
             if (feedback == "OK\n")
             {
-                MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
+                MainWindow chatWindow = new MainWindow(userNameTextBox.Text, passwordTextBox.Password);
                 chatWindow._link = _link;
                 _link._iClient = chatWindow;
 

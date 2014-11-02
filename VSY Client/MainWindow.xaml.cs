@@ -30,16 +30,18 @@ namespace VSY_Client
         public ClientLink _link;
         private String _receiver;
         private String _userName;
+        private String _password;
         private ChatHistory _chatHistory;
         private SoundPlayer _recievedMessageInformation;
         public delegate void ResponseAction(String response);
-        public MainWindow(String userName)
+        public MainWindow(String userName, String Password)
         {
             _receiver = "";            
             InitializeComponent();
             _userName = userName;
             _chatHistory = new ChatHistory();
             _recievedMessageInformation = new SoundPlayer(Properties.Resources.gotMessage);
+            _password = Password;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -208,7 +210,7 @@ namespace VSY_Client
         public void Disconnected()
         {
             ResponseAction reconnect = Reconnect;
-            Dispatcher.Invoke(reconnect, "test");
+            Dispatcher.Invoke(reconnect, _password);
         }
     }
     

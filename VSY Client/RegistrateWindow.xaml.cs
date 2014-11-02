@@ -68,7 +68,7 @@ namespace VSY_Client
         {
             if (!response.Equals("ERROR\n"))
             {
-                MainWindow chatWindow = new MainWindow(userNameTextBox.Text);
+                MainWindow chatWindow = new MainWindow(userNameTextBox.Text, passwordTextBox.Password);
                 _link._iClient = chatWindow;
                 chatWindow._link = _link;
                 Window mainWindow = App.Current.MainWindow;
