@@ -14,6 +14,7 @@ namespace NetworkLib
         // ---------------------- Properties ----------------------
         public IClient _iClient;
         private Thread _readThread;
+        private IPAddress[] _IPserver;
 
         // ---------------------- Constructors ----------------------
 
@@ -21,12 +22,10 @@ namespace NetworkLib
         public ClientLink(IClient client)
         {
             _port = 13000;
-            IPAddress _IPserver = IPAddress.Parse("178.201.225.83");
-            IPAddress _IPclient = GetLocalIP();
-            IPEndPoint _serverEndPoint = new IPEndPoint(_IPserver, 13000);
-            IPEndPoint _clientEndPoint = new IPEndPoint(_IPclient, 0);
-            _client = new TcpClient(_clientEndPoint);
-            _client.Connect(_serverEndPoint);
+            _IPserver = new IPAddress[2];
+            _IPserver[1] = IPAddress.Parse("192.168.220.104");
+            _IPserver[0] = IPAddress.Parse("192.168.220.112");
+            Connect();
             _iClient = client;
             
             StartReading();
@@ -56,8 +55,16 @@ namespace NetworkLib
         {
             while (_client.Connected)
             {
-                Packet recievedPacket = ReadChannel();
-                _iClient.ActionAfterRead(recievedPacket);
+                try
+                {
+                    Packet recievedPacket = ReadChannel();
+                    _iClient.ActionAfterRead(recievedPacket);
+                }
+                catch(System.IO.IOException e)
+                {
+                    _iClient.Disconnected();
+                }
+                
             }
         }
 
@@ -81,6 +88,24 @@ namespace NetworkLib
                 }
             }
             return IPAddress.Parse(localIP);
+        }
+
+
+        public void Connect(int array = 0)
+        {
+            IPAddress IPclient = GetLocalIP();
+            try
+            {
+                IPEndPoint serverEndPoint = new IPEndPoint(_IPserver[array], 13000);
+                IPEndPoint clientEndPoint = new IPEndPoint(IPclient, 0);
+                _client = new TcpClient(clientEndPoint);
+                _client.Connect(serverEndPoint);
+            }
+            catch(SocketException e)
+            {
+                if (_IPserver.Length > array)
+                Connect(array + 1);
+            }
         }
     }
 }

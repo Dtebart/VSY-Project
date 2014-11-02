@@ -11,7 +11,7 @@ namespace NetworkLib.RequestHandler
     {
         public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
-            UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
+            UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
             List<String> friendList = dbApp.GetFriends(request.DestUser);
             dbApp.Close();
 

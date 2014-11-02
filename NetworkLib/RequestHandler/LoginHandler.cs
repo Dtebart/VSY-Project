@@ -12,7 +12,7 @@ namespace NetworkLib.RequestHandler
         public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
             string feedback;
-            UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
+            UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
             string userName = request.SrcUser;
             string password = request.AdditionalArgs[0];
             if (dbApp.UserExists(userName, password))

@@ -81,5 +81,10 @@ namespace VSY_Client
                 _link.Close();
             }
         }
+
+        public void Disconnected()
+        {
+
+        }
     }
 }

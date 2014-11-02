@@ -16,7 +16,7 @@ namespace NetworkLib.RequestHandler
             Packet[] response = new Packet[1];
             try
             {
-                UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
+                UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
                 dbApp.InsertUser(user, password);
 
                 ServerLink.AddClient(request.SrcUser, serverLink.Client);

@@ -82,5 +82,10 @@ namespace VSY_Client
                 MessageBox.Show("Der Name ist bereits vergeben.");
             }
         }
+
+        public void Disconnected()
+        {
+
+        }
     }
 }

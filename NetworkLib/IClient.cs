@@ -9,5 +9,6 @@ namespace NetworkLib
     public interface IClient
     {
         void ActionAfterRead(Packet receipt);
+        void Disconnected();
     }
 }

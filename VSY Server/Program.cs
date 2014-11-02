@@ -17,6 +17,7 @@ namespace VSY_Server
         {
             TcpListener server = new TcpListener(IPAddress.Any, 13000);
             Dictionary<string,TcpClient> clientList = new Dictionary<string,TcpClient>();
+            Console.WriteLine("Test");
             try
             {
                 while (true)

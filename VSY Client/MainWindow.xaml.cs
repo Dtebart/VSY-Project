@@ -186,9 +186,30 @@ namespace VSY_Client
         {
         }
 
+
+        private void Reconnect(string password)
+        {
+            
+            messageBox.Text = "Reconnecting...";
+            _link = new ClientLink(this);
+            Packet loginRequest = new Packet(_userName, _userName, "Login-Try", MessageTypes.Login);
+            loginRequest.AddParam("test");
+            _link.WriteMessage(loginRequest);
+            
+            friendsListBox.Items.Clear();
+            messageBox.Text = "";
+            FetchFriendlist();
+        }
+
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             FetchFriendlist();
         }
+        public void Disconnected()
+        {
+            ResponseAction reconnect = Reconnect;
+            Dispatcher.Invoke(reconnect, "test");
+        }
     }
+    
 }
