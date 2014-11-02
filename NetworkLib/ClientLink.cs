@@ -22,9 +22,10 @@ namespace NetworkLib
         public ClientLink(IClient client)
         {
             _port = 13000;
-            _IPserver = new IPAddress[2];
-            _IPserver[1] = IPAddress.Parse("192.168.220.104");
-            _IPserver[0] = IPAddress.Parse("192.168.220.112");
+            _IPserver = new IPAddress[3];
+            _IPserver[0] = IPAddress.Parse("178.201.225.83");
+            _IPserver[1] = IPAddress.Parse("77.9.80.15");
+            _IPserver[2] = IPAddress.Parse("192.168.220.112");
             Connect();
             _iClient = client;
             
@@ -91,20 +92,20 @@ namespace NetworkLib
         }
 
 
-        public void Connect(int array = 0)
+        public void Connect(int ServerNumber = 0)
         {
             IPAddress IPclient = GetLocalIP();
             try
             {
-                IPEndPoint serverEndPoint = new IPEndPoint(_IPserver[array], 13000);
+                IPEndPoint serverEndPoint = new IPEndPoint(_IPserver[ServerNumber], 13000);
                 IPEndPoint clientEndPoint = new IPEndPoint(IPclient, 0);
                 _client = new TcpClient(clientEndPoint);
                 _client.Connect(serverEndPoint);
             }
             catch(SocketException e)
             {
-                if (_IPserver.Length > array)
-                Connect(array + 1);
+                if (_IPserver.Length > ServerNumber)
+                Connect(ServerNumber + 1);
             }
         }
     }

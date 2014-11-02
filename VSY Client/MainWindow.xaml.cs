@@ -196,9 +196,9 @@ namespace VSY_Client
             loginRequest.AddParam("test");
             _link.WriteMessage(loginRequest);
             
-            friendsListBox.Items.Clear();
+
             messageBox.Text = "";
-            FetchFriendlist();
+           // FetchFriendlist();
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)

@@ -9,18 +9,25 @@ namespace NetworkLib.RequestHandler
 {
     public class LoginHandler : RequestHandler
     {
+
+        private UserDBApp _DB;
+        public LoginHandler(UserDBApp UserDB)
+        {
+            _DB = UserDB;
+        }
+
         public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
             string feedback;
-            UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
+            //UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
             string userName = request.SrcUser;
             string password = request.AdditionalArgs[0];
-            if (dbApp.UserExists(userName, password))
+            if (_DB.UserExists(userName, password))
             {
                 feedback = "OK";
                 ServerLink.AddClient(request.SrcUser, serverLink.Client);
                 serverLink._clientName = userName;
-                dbApp.ChangeOnlinestatus(userName, true);
+                _DB.ChangeOnlinestatus(userName, true);
             }
             else
             {
@@ -28,7 +35,7 @@ namespace NetworkLib.RequestHandler
             }
             Packet loginFeedback = new Packet(request.SrcUser, feedback, MessageTypes.Login);
 
-            List<String> friendsOfRequester = dbApp.GetOnlineFriends(userName);
+            List<String> friendsOfRequester = _DB.GetOnlineFriends(userName);
 
             Packet[] response = new Packet[friendsOfRequester.Count + 1];
             response[0] = loginFeedback;

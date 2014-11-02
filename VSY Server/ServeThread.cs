@@ -15,6 +15,7 @@ namespace VSY_Server
     {
         private Thread _thread;
         private ServerLink _serverLink;
+        private UserDBApp _dbApp = null;
 
         public ServeThread(ServerLink link){
             _serverLink = link;
@@ -72,10 +73,21 @@ namespace VSY_Server
             ServerLink.RemoveClient(userName);
             Console.WriteLine("Closed Connection to Client: {0}\n", userName);
 
-            UserDBApp dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
-            dbApp.ChangeOnlinestatus(userName, false);
+            if(_dbApp == null)
+            {
+                try
+                {
+                    _dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
+                }
+                catch (System.Data.SqlClient.SqlException e)
+                {
+                    _dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
+                }
+            }
 
-            List<String> onlineFriends = dbApp.GetOnlineFriends(userName);
+            _dbApp.ChangeOnlinestatus(userName, false);
+
+            List<String> onlineFriends = _dbApp.GetOnlineFriends(userName);
             foreach (String friend in onlineFriends)
             {
                 TcpClient receiver = _serverLink.ClientList[friend];

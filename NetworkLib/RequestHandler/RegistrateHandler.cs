@@ -9,6 +9,14 @@ namespace NetworkLib.RequestHandler
 {
     public class RegistrateHandler : RequestHandler
     {
+
+        UserDBApp _userDB;
+
+        public RegistrateHandler(UserDBApp UserDB)
+        {
+            _userDB = UserDB;
+        }
+
         public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
             String user = request.SrcUser;
@@ -16,8 +24,8 @@ namespace NetworkLib.RequestHandler
             Packet[] response = new Packet[1];
             try
             {
-                UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
-                dbApp.InsertUser(user, password);
+                //UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
+                _userDB.InsertUser(user, password);
 
                 ServerLink.AddClient(request.SrcUser, serverLink.Client);
 

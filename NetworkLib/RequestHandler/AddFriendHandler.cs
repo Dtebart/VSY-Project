@@ -9,16 +9,23 @@ namespace NetworkLib.RequestHandler
 {
     public class AddFriendHandler : RequestHandler
     {
+
+        UserDBApp _DB;
+        public AddFriendHandler (UserDBApp UserDB)
+        {
+            _DB = UserDB;
+        }
+
         public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
-            UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
+            //UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
 
             String newFriend = request.Content.Replace("\n", "");
             Packet[] response = new Packet[1];
             try
             {
-                dbApp.InsertFriendship(request.SrcUser, newFriend);
-                request.AddParam(dbApp.UserIsOnline(newFriend).ToString());
+                _DB.InsertFriendship(request.SrcUser, newFriend);
+                request.AddParam(_DB.UserIsOnline(newFriend).ToString());
 
                 response[0] = request;
             }

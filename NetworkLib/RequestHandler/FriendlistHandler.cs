@@ -9,11 +9,16 @@ namespace NetworkLib.RequestHandler
 {
     public class FriendlistHandler : RequestHandler
     {
+        UserDBApp _DB;
+
+        public FriendlistHandler(UserDBApp UserDB)
+        {
+            _DB = UserDB;
+        }
+
         public override Packet[] HandleRequest(Packet request, ServerLink serverLink)
         {
-            UserDBApp dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
-            List<String> friendList = dbApp.GetFriends(request.DestUser);
-            dbApp.Close();
+            List<String> friendList = _DB.GetFriends(request.DestUser);
 
             for (int i = 0; i < friendList.Count; i++){
                 request.AddParam(friendList[i]);
