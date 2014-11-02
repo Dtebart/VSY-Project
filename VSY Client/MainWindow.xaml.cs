@@ -195,7 +195,7 @@ namespace VSY_Client
             messageBox.Text = "Reconnecting...";
             _link = new ClientLink(this);
             Packet loginRequest = new Packet(_userName, _userName, "Login-Try", MessageTypes.Login);
-            loginRequest.AddParam("test");
+            loginRequest.AddParam(password);
             _link.WriteMessage(loginRequest);
             
 

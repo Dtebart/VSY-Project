@@ -17,13 +17,12 @@ namespace NetworkLib.RequestHandler
             {
                 try
                 {
-                    dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");                    
-                    
+                    dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;"); 
+    
                 }
                 catch (System.Data.SqlClient.SqlException e)
                 {
-
-                    dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");
+                    dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");    
                 }
             }
 

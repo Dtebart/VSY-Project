@@ -32,6 +32,7 @@ namespace NetworkLib
                 // Translate data bytes to a ASCII string.
                 message += System.Text.Encoding.BigEndianUnicode.GetString(dataBuffer, 0, i);
 
+
             } while (message[message.Length - 1] != '\n');
 
             Console.WriteLine("Received: {0}", message);

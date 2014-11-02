@@ -28,7 +28,7 @@ namespace NetworkLib
             _IPserver[2] = IPAddress.Parse("192.168.220.112");
             Connect();
             _iClient = client;
-            
+
             StartReading();
         }
 
@@ -61,11 +61,11 @@ namespace NetworkLib
                     Packet recievedPacket = ReadChannel();
                     _iClient.ActionAfterRead(recievedPacket);
                 }
-                catch(System.IO.IOException e)
+                catch (System.IO.IOException e)
                 {
                     _iClient.Disconnected();
                 }
-                
+
             }
         }
 
@@ -82,7 +82,7 @@ namespace NetworkLib
             host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (IPAddress ip in host.AddressList)
             {
-                
+
                 if (ip.AddressFamily.ToString() == "InterNetwork")
                 {
                     localIP = ip.ToString();
@@ -95,17 +95,16 @@ namespace NetworkLib
         public void Connect(int ServerNumber = 0)
         {
             IPAddress IPclient = GetLocalIP();
-            try
-            {
-                IPEndPoint serverEndPoint = new IPEndPoint(_IPserver[ServerNumber], 13000);
-                IPEndPoint clientEndPoint = new IPEndPoint(IPclient, 0);
-                _client = new TcpClient(clientEndPoint);
-                _client.Connect(serverEndPoint);
-            }
-            catch(SocketException e)
+            IPEndPoint serverEndPoint = new IPEndPoint(_IPserver[ServerNumber], 13000);
+            IPEndPoint clientEndPoint = new IPEndPoint(IPclient, 0);
+            _client = new TcpClient(clientEndPoint);
+            IAsyncResult result = _client.BeginConnect(_IPserver[ServerNumber], 13000, null, null);
+            Boolean success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+
+            if (!success)
             {
                 if (_IPserver.Length > ServerNumber)
-                Connect(ServerNumber + 1);
+                    Connect(ServerNumber + 1);
             }
         }
     }
