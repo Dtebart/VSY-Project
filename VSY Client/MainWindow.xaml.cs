@@ -28,11 +28,14 @@ namespace VSY_Client
     public partial class MainWindow : Window, IClient
     {
         public ClientLink _link;
+        private ListBoxItem _selectedFriend;
         private String _receiver;
         private String _userName;
         private String _password;
         private ChatHistory _chatHistory;
         private SoundPlayer _recievedMessageInformation;
+
+
         public delegate void ResponseAction(String response);
         public MainWindow(String userName, String Password)
         {
@@ -47,13 +50,20 @@ namespace VSY_Client
         {
             if (messageBox.Text != "" && _receiver != "")
             {
-                if (!_chatHistory.UserExist(_receiver))
-                    _chatHistory.AddUser(_receiver);
-                Packet messageRequest = new Packet(_userName, _receiver, messageBox.Text, MessageTypes.TextMessage);
-                _link.WriteMessage(messageRequest);
-                _chatHistory.AddTexttoUser("Ich: " + messageRequest.Content, messageRequest.DestUser);
-                receivedMessageBox.Text = _chatHistory.GetText(messageRequest.DestUser);
-                messageBox.Text = "";
+                if (_selectedFriend.Background == Brushes.Green)
+                {
+                    if (!_chatHistory.UserExist(_receiver))
+                        _chatHistory.AddUser(_receiver);
+                    Packet messageRequest = new Packet(_userName, _receiver, messageBox.Text, MessageTypes.TextMessage);
+                    _link.WriteMessage(messageRequest);
+                    _chatHistory.AddTexttoUser("Ich: " + messageRequest.Content, messageRequest.DestUser);
+                    receivedMessageBox.Text = _chatHistory.GetText(messageRequest.DestUser);
+                    messageBox.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show(String.Format("Der Nutzer {0} ist zurzeit nicht online.", _receiver));
+                }
             }
         }
         public void ActionAfterRead(Packet receipt)
@@ -65,8 +75,6 @@ namespace VSY_Client
                 _chatHistory.AddTexttoUser(receipt.SrcUser + ": " + receipt.Content, receipt.SrcUser);
                 ResponseAction updateMessageBox = UpdateRecievedMessages;
                 Dispatcher.Invoke(updateMessageBox, receipt.SrcUser);
-                
-
             }
             else if (receipt.Type == MessageTypes.GetFriendlist)
             {
@@ -170,8 +178,8 @@ namespace VSY_Client
         }
         private void friendListItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ListBoxItem selectedFriend = (ListBoxItem)e.Source;
-            _receiver = selectedFriend.Content.ToString();
+            _selectedFriend = (ListBoxItem)e.Source;
+            _receiver = _selectedFriend.Content.ToString();
             int buttonTextPlaceStart = sendButton.Content.ToString().IndexOf("-");
             int buttonTextPlaceEnd = sendButton.Content.ToString().LastIndexOf("-");
             String oldReceiver = sendButton.Content.ToString().Substring(buttonTextPlaceStart + 1, buttonTextPlaceEnd - buttonTextPlaceStart - 1);

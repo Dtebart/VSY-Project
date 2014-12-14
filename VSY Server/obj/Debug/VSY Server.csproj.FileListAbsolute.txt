@@ -15,3 +15,11 @@ C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\b
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\bin\Debug\NetworkLib.pdb
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\obj\Debug\VSY Server.exe
 C:\Users\Daniel\Documents\Visual Studio 2013\Projects\VSY Messenger\VSY Server\obj\Debug\VSY Server.pdb
+C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Server\bin\Debug\VSY Server.exe.config
+C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Server\obj\Debug\VSY Server.exe
+C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Server\obj\Debug\VSY Server.pdb
+C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Server\bin\Debug\VSY Server.exe
+C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Server\bin\Debug\VSY Server.pdb
+C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Server\bin\Debug\NetworkLib.dll
+C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Server\bin\Debug\NetworkLib.pdb
+C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Server\obj\Debug\VSY Server.csprojResolveAssemblyReference.cache

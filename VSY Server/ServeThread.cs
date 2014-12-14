@@ -77,11 +77,11 @@ namespace VSY_Server
             {
                 try
                 {
-                    _dbApp = new UserDBApp("Data Source=DANIEL-PC\\SQLEXPRESS;", "Initial Catalog=UserDB;");
+                    _dbApp = new UserDBApp("Data Source=DANIELT-PC\\SQLEXPRESS;", "Initial Catalog=master;");
                 }
                 catch (System.Data.SqlClient.SqlException e)
                 {
-                    _dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");                   
+                    _dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=master;");                   
                 }
             }
 
