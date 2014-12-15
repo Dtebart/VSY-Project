@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
@@ -22,10 +23,7 @@ namespace NetworkLib
         public ClientLink(IClient client)
         {
             _port = 13000;
-            _IPserver = new IPAddress[3];
-            _IPserver[0] = IPAddress.Parse("178.201.225.83");
-            _IPserver[1] = IPAddress.Parse("77.9.80.15");
-            _IPserver[2] = IPAddress.Parse("192.168.220.112");
+            _IPserver = ReadServerlist("serverlist.txt");
             Connect();
             _iClient = client;
 
@@ -40,6 +38,26 @@ namespace NetworkLib
         }
 
         // ---------------------- Functions ----------------------
+        private IPAddress[] ReadServerlist(String fileName)
+        {
+            List<IPAddress> serverList = new List<IPAddress>();
+            try
+            {
+                StreamReader sr = new StreamReader(fileName);
+                while (!sr.EndOfStream)
+                {
+                    String serverIp = sr.ReadLine();
+                    serverList.Add(IPAddress.Parse(serverIp));
+                }
+
+                return serverList.ToArray();
+            }
+            catch (Exception e)
+            {
+                // Do something here
+                return null;
+            }
+        }
         private void StartReading()
         {
             _stream = _client.GetStream();
