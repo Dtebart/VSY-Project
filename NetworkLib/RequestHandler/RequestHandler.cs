@@ -11,43 +11,35 @@ namespace NetworkLib.RequestHandler
     public abstract class RequestHandler
     {
         static UserDBApp dbApp = null;
-        public static RequestHandler GetHandler(MessageTypes type){
 
+        private static Dictionary<MessageTypes, RequestHandler> _requestHandlerDict = new Dictionary<MessageTypes, RequestHandler>();
+
+        public static void RegistrateHandler()
+        {
+            RequestHandler._requestHandlerDict.Add(MessageTypes.AddFriend, new AddFriendHandler(dbApp));
+            RequestHandler._requestHandlerDict.Add(MessageTypes.GetFriendlist, new FriendlistHandler(dbApp));
+            RequestHandler._requestHandlerDict.Add(MessageTypes.Login, new LoginHandler(dbApp));
+            RequestHandler._requestHandlerDict.Add(MessageTypes.Registrate, new RegistrateHandler(dbApp));
+            RequestHandler._requestHandlerDict.Add(MessageTypes.TextMessage, new MessageRequestHandler());
+        }
+        public static void RegistrateDataBase()
+        {
             if (dbApp == null)
             {
                 try
                 {
-                    dbApp = new UserDBApp("Data Source=DANIELT-PC\\SQLEXPRESS;", "Initial Catalog=master;"); 
-    
+                    dbApp = new UserDBApp("Data Source=DANIELT-PC\\SQLEXPRESS;", "Initial Catalog=master;");
+
                 }
                 catch (System.Data.SqlClient.SqlException e)
                 {
-                    dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=master;");    
+                    dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=master;");
                 }
             }
+        }
 
-            if (type == MessageTypes.TextMessage)
-            {
-                return new MessageRequestHandler();
-            }
-            else if (type == MessageTypes.GetFriendlist)
-            {
-                return new FriendlistHandler(dbApp);
-            }
-            else if (type == MessageTypes.Login)
-            {
-                return new LoginHandler(dbApp);
-            }
-            else if (type == MessageTypes.Registrate)
-            {
-                return new RegistrateHandler(dbApp);
-            }
-            else if (type == MessageTypes.AddFriend)
-            {
-                return new AddFriendHandler(dbApp);
-            }
-
-            return null;
+        public static RequestHandler GetHandler(MessageTypes type){
+            return RequestHandler._requestHandlerDict[type];
         }
 
         public abstract Packet[] HandleRequest(Packet request, ServerLink serverLink);

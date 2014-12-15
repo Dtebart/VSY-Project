@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using NetworkLib;
+using NetworkLib.RequestHandler;
 
 namespace VSY_Server
 {
@@ -15,6 +16,9 @@ namespace VSY_Server
     {
         static void Main(string[] args)
         {
+            RequestHandler.RegistrateDataBase();
+            RequestHandler.RegistrateHandler();
+
             TcpListener server = new TcpListener(IPAddress.Any, 13000);
             Dictionary<string,TcpClient> clientList = new Dictionary<string,TcpClient>();
             try
