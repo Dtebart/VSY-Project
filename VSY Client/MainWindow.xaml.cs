@@ -58,6 +58,7 @@ namespace VSY_Client
                     _link.WriteMessage(messageRequest);
                     _chatHistory.AddTexttoUser("Ich: " + messageRequest.Content, messageRequest.DestUser);
                     receivedMessageBox.Text = _chatHistory.GetText(messageRequest.DestUser);
+                    
                     messageBox.Text = "";
                 }
                 else
@@ -112,6 +113,7 @@ namespace VSY_Client
         public void UpdateRecievedMessages(string user)
         {
             receivedMessageBox.Text = _chatHistory.GetText(user);
+            Scrollbar.ScrollToBottom();
             _recievedMessageInformation.Play();
         }
 

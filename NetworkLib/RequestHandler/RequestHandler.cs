@@ -22,7 +22,7 @@ namespace NetworkLib.RequestHandler
                 }
                 catch (System.Data.SqlClient.SqlException e)
                 {
-                    dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=master;");    
+                    dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");    
                 }
             }
 

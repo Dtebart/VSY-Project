@@ -81,7 +81,7 @@ namespace VSY_Server
                 }
                 catch (System.Data.SqlClient.SqlException e)
                 {
-                    _dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=master;");                   
+                    _dbApp = new UserDBApp("Data Source=(local);", "Initial Catalog=UserDB;");                   
                 }
             }
 

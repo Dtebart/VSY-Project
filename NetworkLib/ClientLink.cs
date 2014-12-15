@@ -19,7 +19,6 @@ namespace NetworkLib
 
         // ---------------------- Constructors ----------------------
 
-        // Server is the same as the client; only for debugging purposes
         public ClientLink(IClient client)
         {
             _port = 13000;

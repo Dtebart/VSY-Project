@@ -58,3 +58,23 @@ C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Client\ob
 C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Client\obj\Debug\VSY Client.g.resources
 C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Client\obj\Debug\VSY_Client.Properties.Resources.resources
 C:\Users\DanielT\Documents\Visual Studio 2013\Projects\VSY-Project\VSY Client\obj\Debug\VSY Client.csproj.GenerateResource.Cache
+C:\Users\Max\DerInstantMessenger\VSY Client\bin\Debug\VSY Client.exe.config
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\VSY Client.exe
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\VSY Client.pdb
+C:\Users\Max\DerInstantMessenger\VSY Client\bin\Debug\VSY Client.exe
+C:\Users\Max\DerInstantMessenger\VSY Client\bin\Debug\VSY Client.pdb
+C:\Users\Max\DerInstantMessenger\VSY Client\bin\Debug\NetworkLib.dll
+C:\Users\Max\DerInstantMessenger\VSY Client\bin\Debug\NetworkLib.pdb
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\VSY Client.csprojResolveAssemblyReference.cache
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\MainWindow.baml
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\RegistrateWindow.baml
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\StartWindow.baml
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\MainWindow.g.cs
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\RegistrateWindow.g.cs
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\StartWindow.g.cs
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\App.g.cs
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\VSY Client_Content.g.cs
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\VSY Client_MarkupCompile.cache
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\VSY Client.g.resources
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\VSY_Client.Properties.Resources.resources
+C:\Users\Max\DerInstantMessenger\VSY Client\obj\Debug\VSY Client.csproj.GenerateResource.Cache

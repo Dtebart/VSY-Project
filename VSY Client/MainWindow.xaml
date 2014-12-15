@@ -5,7 +5,7 @@
     <Grid Margin="0,0,-8,0" Initialized="Grid_Initialized" Loaded="Grid_Loaded">
         <Button x:Name="sendButton" Content="Nachricht an -?- senden" HorizontalAlignment="Left" Margin="293,222,0,0"  VerticalAlignment="Top" Width="196" RenderTransformOrigin="0.961,-1.509" Height="78" Click="Button_Click"/>
         <TextBox x:Name="messageBox" HorizontalAlignment="Left" Height="78" Margin="23,222,0,0" Background="AliceBlue" TextWrapping="Wrap" VerticalAlignment="Top" Width="229" FontSize="16" RenderTransformOrigin="-0.253,0.538"/>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="23,19,211,121">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="23,19,211,121" Name="Scrollbar">
             <TextBlock x:Name="receivedMessageBox" HorizontalAlignment="Left" MinHeight="181" Background="Beige" TextWrapping="Wrap" VerticalAlignment="Top" Width="466" FontSize="16" RenderTransformOrigin="-0.253,0.538"/>
         </ScrollViewer>
         <ListBox x:Name="friendsListBox" HorizontalAlignment="Left" Height="226" Margin="507,74,0,0" VerticalAlignment="Top" Width="172" MouseDown="friendsListBox_MouseDown"/>
